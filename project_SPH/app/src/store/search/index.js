@@ -9,6 +9,8 @@ const actions={}
 const getters={}
 
 export default {
+    //开启命名空间cnc
+    namespaced:true,
     state,
     mutations,
     actions,
