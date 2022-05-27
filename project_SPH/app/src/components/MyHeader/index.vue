@@ -45,7 +45,9 @@
 export default {
     name: 'MyHeader',
     data(){
-
+        return {
+            
+        }
     },
     methods: {
         //点击搜索按钮，跳转到搜素页面
