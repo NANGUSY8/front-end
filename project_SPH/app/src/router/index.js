@@ -18,19 +18,32 @@ export default new VueRouter({
     routes:[
         {
             path:'/home',
-            component:MyHome
+            component:MyHome,
+            meta:{
+                //控制MyFooter组件是否显示
+                show:true
+            }
         },
         {
             path:'/login',
-            component:MyLogin
+            component:MyLogin,
+            meta:{
+                show:false
+            }
         },
         {
             path:'/search',
-            component:MySearch
+            component:MySearch,
+            meta:{
+                show:true
+            }
         },
         {
             path:'/register',
-            component:MyRegister
+            component:MyRegister,
+            meta:{
+                show:false
+            }
         },
         //重定向
         {

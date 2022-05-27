@@ -3,7 +3,7 @@
     <MyHeader></MyHeader>
     <!-- 路由组件出口 -->
     <router-view ></router-view>
-    <MyFooter></MyFooter>
+    <MyFooter v-show="$route.meta.show"></MyFooter>
   </div>
 </template>
 

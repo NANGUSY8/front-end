@@ -1,13 +1,13 @@
 <template>
-  <div>首页</div>
+  <TypeNav></TypeNav>
 </template>
 
 <script>
 export default {
-    name:'MyHome'
+  name: 'MyHome'
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 
 </style>

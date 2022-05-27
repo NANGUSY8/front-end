@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import TypeNav from '@/pages/MyHome/TypeNav'
+//注册全局组件
+Vue.component(TypeNav.name,TypeNav)
+
 //引入路由
 import router from './router'
 //关闭生产提示
