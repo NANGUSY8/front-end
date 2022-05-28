@@ -16,22 +16,26 @@
       </nav>
       <!-- 一级分类 -->
       <div class="sort">
-        <div class="all-sort-list2" >
-          <div class="item bo" v-for="(c1,index) in categoryList.slice(0,16)" :key="c1.categoryId" :class="{cur:currentIndex==index}">
+        <!-- 利用事件委派+编程式导航完成路由的跳转 -->
+        <div class="all-sort-list2" @click="goSearch">
+          <div class="item bo" v-for="(c1, index) in categoryList.slice(0, 16)" :key="c1.categoryId"
+            :class="{ cur: currentIndex == index }">
             <h3 @mouseenter="changeIndex(index)">
-              <a href="">{{c1.categoryName}}</a>
+              <!-- 自定义属性以data-开头才能使用dataset属性 -->
+              <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
             </h3>
             <!-- 二级分类 -->
-            <div class="item-list clearfix" :style="{display:currentIndex==index? 'block':'none'}">
+            <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
               <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
                 <dl class="fore">
                   <dt>
-                    <a href="">{{c2.categoryName}}</a>
+                    <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
                   </dt>
                   <!-- 三级分类 -->
                   <dd>
                     <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                      <a href="">{{c3.categoryName}}</a>
+                      <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName
+                      }}</a>
                     </em>
                   </dd>
                 </dl>
@@ -46,36 +50,61 @@
 
 <script>
 
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import throttle from 'lodash/throttle'
 
 export default {
-    name:'TypeNav',
-    //挂载完毕，通知Vuex向服务器发送请求
-    mounted() {  
-      this.$store.dispatch('home/categoryList','categoryList')
-    },
-    data(){
-      return{
-        //标记当前鼠标移入的一级分类的索引值
-        currentIndex:-1,
-      }
-    },
-    methods: {
-      //当鼠标移入时，改变currentIndex值为当前的元素的index值
-      changeIndex:throttle(function(index){
-        this.currentIndex = index  //this为vc对象,执行时绑定的
-      },50),
-      //鼠标移除时
-      leaveIndex(){
-        this.currentIndex = -1
-      }
-    },
-    computed:{
-      ...mapState({
-        categoryList:state=>state.home.categoryList
-      })
+  name: 'TypeNav',
+  //挂载完毕，通知Vuex向服务器发送请求
+  mounted() {
+    this.$store.dispatch('home/categoryList', 'categoryList')
+  },
+  data() {
+    return {
+      //标记当前鼠标移入的一级分类的索引值
+      currentIndex: -1,
     }
+  },
+  methods: {
+    //当鼠标移入时，改变currentIndex值为当前的元素的index值
+    changeIndex: throttle(function (index) {
+      this.currentIndex = index  //this为vc对象,执行时绑定的
+    }, 50),
+    //鼠标移除时
+    leaveIndex() {
+      this.currentIndex = -1
+    },
+    //鼠标点击时三级联动菜单时
+    goSearch(event) {
+      //得到自定义属性
+      const { categoryname, category1id, category2id, category3id } = event.target.dataset
+
+      if (categoryname) {
+        //存在该属性，说明是点击的是a标签
+        let location = { name: 'search' }
+        let query = { categoryName: categoryname }
+        if (category1id) {
+          //点击的是一级分类
+          query.category1Id = category1id 
+        } else if (category2id) {
+          //点击的是二级分类
+          query.category2Id = category2id 
+        } else {
+          //点击的是三级分类
+          query.category3Id = category3id 
+        }
+        //整理参数
+        location.query = query
+        //跳转到搜索路由
+        this.$router.push(location)
+      }
+    }
+  },
+  computed: {
+    ...mapState({
+      categoryList: state => state.home.categoryList
+    })
+  }
 }
 </script>
 
@@ -189,7 +218,8 @@ export default {
             }
           }
         }
-        .cur{
+
+        .cur {
           background-color: skyblue;
         }
       }
