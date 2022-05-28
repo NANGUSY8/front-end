@@ -14,18 +14,21 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
+      <!-- 一级分类 -->
       <div class="sort">
         <div class="all-sort-list2" >
           <div class="item bo" v-for="(c1,index) in categoryList.slice(0,16)" :key="c1.categoryId" :class="{cur:currentIndex==index}">
             <h3 @mouseenter="changeIndex(index)">
               <a href="">{{c1.categoryName}}</a>
             </h3>
-            <div class="item-list clearfix">
+            <!-- 二级分类 -->
+            <div class="item-list clearfix" :style="{display:currentIndex==index? 'block':'none'}">
               <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
                 <dl class="fore">
                   <dt>
                     <a href="">{{c2.categoryName}}</a>
                   </dt>
+                  <!-- 三级分类 -->
                   <dd>
                     <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
                       <a href="">{{c3.categoryName}}</a>
@@ -44,6 +47,7 @@
 <script>
 
 import {mapState} from 'vuex'
+import throttle from 'lodash/throttle'
 
 export default {
     name:'TypeNav',
@@ -59,9 +63,9 @@ export default {
     },
     methods: {
       //当鼠标移入时，改变currentIndex值为当前的元素的index值
-      changeIndex(index){
-        this.currentIndex = index
-      },
+      changeIndex:throttle(function(index){
+        this.currentIndex = index  //this为vc对象,执行时绑定的
+      },50),
       //鼠标移除时
       leaveIndex(){
         this.currentIndex = -1
@@ -182,12 +186,6 @@ export default {
                   }
                 }
               }
-            }
-          }
-
-          &:hover {
-            .item-list {
-              display: block;
             }
           }
         }
