@@ -1,7 +1,8 @@
 <template>
   <!-- 商品分类导航 -->
   <div class="type-nav">
-    <div class="container">
+    <!-- 事件委托|事件委派 -->
+    <div class="container" @mouseleave="leaveIndex">
       <h2 class="all">全部商品分类</h2>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -14,9 +15,9 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2">
-          <div class="item bo" v-for="c1 in categoryList.slice(0,16)" :key="c1.categoryId">
-            <h3>
+        <div class="all-sort-list2" >
+          <div class="item bo" v-for="(c1,index) in categoryList.slice(0,16)" :key="c1.categoryId" :class="{cur:currentIndex==index}">
+            <h3 @mouseenter="changeIndex(index)">
               <a href="">{{c1.categoryName}}</a>
             </h3>
             <div class="item-list clearfix">
@@ -49,6 +50,22 @@ export default {
     //挂载完毕，通知Vuex向服务器发送请求
     mounted() {  
       this.$store.dispatch('home/categoryList','categoryList')
+    },
+    data(){
+      return{
+        //标记当前鼠标移入的一级分类的索引值
+        currentIndex:-1,
+      }
+    },
+    methods: {
+      //当鼠标移入时，改变currentIndex值为当前的元素的index值
+      changeIndex(index){
+        this.currentIndex = index
+      },
+      //鼠标移除时
+      leaveIndex(){
+        this.currentIndex = -1
+      }
     },
     computed:{
       ...mapState({
@@ -102,7 +119,7 @@ export default {
       .all-sort-list2 {
         .item {
           h3 {
-            line-height: 30px;
+            line-height: 29px;
             font-size: 14px;
             font-weight: 400;
             overflow: hidden;
@@ -173,6 +190,9 @@ export default {
               display: block;
             }
           }
+        }
+        .cur{
+          background-color: skyblue;
         }
       }
     }
