@@ -60,9 +60,9 @@ import throttle from 'lodash/throttle'
 export default {
   name: 'TypeNav',
   mounted() {
-    //路径不是首页，则不显示三级联动菜单
-    if (this.$route.path != '/home') {
-      this.isShow = false
+    //路径是首页，则显示三级联动菜单
+    if (this.$route.path == '/home') {
+      this.isShow = true
     }
 
     // if(this.$route.)
@@ -72,7 +72,7 @@ export default {
       //标记当前鼠标移入的一级分类的索引值
       currentIndex: -1,
       //标记商品分类导航是否展示
-      isShow: true
+      isShow:false
     }
   },
   methods: {
@@ -110,6 +110,9 @@ export default {
         }
         //整理参数
         location.query = query
+        //合并params参数
+        location.params = this.$route.params
+        
         //跳转到搜索路由
         this.$router.push(location)
       }
@@ -249,19 +252,21 @@ export default {
     //进入的起点，离开的终点
     .sort-enter,
     .sort-leave-to {
-      height: 0px;
+      // height: 0px;
+      opacity: 0;
     }
 
     .sort-enter-active,
     .sort-leave-active {
-      transition: all .5s linear;
+      transition: all .3s linear;
       overflow: hidden;
     }
 
     //进入的终点，离开的起点
     .sort-enter-to,
     .sort-leave {
-      height: 461px;
+      // height: 461px;
+      opacity: 1;
     }
   }
 }
