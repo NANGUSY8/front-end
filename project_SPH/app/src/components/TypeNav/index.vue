@@ -59,9 +59,8 @@ import throttle from 'lodash/throttle'
 
 export default {
   name: 'TypeNav',
-  //挂载完毕，通知Vuex向服务器发送请求
   mounted() {
-    this.$store.dispatch('home/categoryList', 'categoryList')
+    //路径不是首页，则不显示三级联动菜单
     if (this.$route.path != '/home') {
       this.isShow = false
     }
@@ -170,7 +169,6 @@ export default {
       position: absolute;
       background: #fafafa;
       z-index: 999;
-      overflow: hidden;
 
       .all-sort-list2 {
         .item {
@@ -247,15 +245,22 @@ export default {
         }
       }
     }
+
     //进入的起点，离开的终点
-    .sort-enter,.sort-leave-to{
-        height:0px;
+    .sort-enter,
+    .sort-leave-to {
+      height: 0px;
     }
-    .sort-enter-active,.sort-leave-active{
-      transition: .5s linear;
+
+    .sort-enter-active,
+    .sort-leave-active {
+      transition: all .5s linear;
+      overflow: hidden;
     }
+
     //进入的终点，离开的起点
-    .sort-enter-to,.sort-leave{
+    .sort-enter-to,
+    .sort-leave {
       height: 461px;
     }
   }

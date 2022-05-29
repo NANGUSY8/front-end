@@ -15,7 +15,11 @@ export default {
   name: 'App',
   components: {
     MyHeader, MyFooter
-  }
+  },
+  mounted() {
+  //挂载完毕，通知Vuex向服务器发送请求,获取商品列表数据
+    this.$store.dispatch('home/categoryList', 'categoryList')
+  },
 }
 </script>
 
