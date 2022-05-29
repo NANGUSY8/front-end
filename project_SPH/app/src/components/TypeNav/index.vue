@@ -2,7 +2,7 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <!-- 事件委托|事件委派 -->
-    <div class="container" @mouseleave="leaveIndex">
+    <div class="container" @mouseleave="leaveIndex" @mouseenter="showList">
       <h2 class="all">全部商品分类</h2>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -14,36 +14,40 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <!-- 一级分类 -->
-      <div class="sort">
-        <!-- 利用事件委派+编程式导航完成路由的跳转 -->
-        <div class="all-sort-list2" @click="goSearch">
-          <div class="item bo" v-for="(c1, index) in categoryList.slice(0, 16)" :key="c1.categoryId"
-            :class="{ cur: currentIndex == index }">
-            <h3 @mouseenter="changeIndex(index)">
-              <!-- 自定义属性以data-开头才能使用dataset属性 -->
-              <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
-            </h3>
-            <!-- 二级分类 -->
-            <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
-              <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
-                <dl class="fore">
-                  <dt>
-                    <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
-                  </dt>
-                  <!-- 三级分类 -->
-                  <dd>
-                    <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                      <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName
+      <!-- 一级分类,添加过渡动画效果 -->
+      <transition name="sort">
+        <div class="sort" v-show="isShow">
+          <!-- 利用事件委派+编程式导航完成路由的跳转 -->
+          <div class="all-sort-list2" @click="goSearch">
+            <div class="item bo" v-for="(c1, index) in categoryList.slice(0, 16)" :key="c1.categoryId"
+              :class="{ cur: currentIndex == index }">
+              <h3 @mouseenter="changeIndex(index)">
+                <!-- 自定义属性以data-开头才能使用dataset属性 -->
+                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
+              </h3>
+              <!-- 二级分类 -->
+              <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
+                <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
+                  <dl class="fore">
+                    <dt>
+                      <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName
                       }}</a>
-                    </em>
-                  </dd>
-                </dl>
+                    </dt>
+                    <!-- 三级分类 -->
+                    <dd>
+                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                        <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName
+                        }}</a>
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </transition>
+
     </div>
   </div>
 </template>
@@ -58,25 +62,37 @@ export default {
   //挂载完毕，通知Vuex向服务器发送请求
   mounted() {
     this.$store.dispatch('home/categoryList', 'categoryList')
+    if (this.$route.path != '/home') {
+      this.isShow = false
+    }
+
+    // if(this.$route.)
   },
   data() {
     return {
       //标记当前鼠标移入的一级分类的索引值
       currentIndex: -1,
+      //标记商品分类导航是否展示
+      isShow: true
     }
   },
   methods: {
-    //当鼠标移入时，改变currentIndex值为当前的元素的index值
+    //当鼠标移入一级分类时，改变currentIndex值为当前的元素的index值
     changeIndex: throttle(function (index) {
       this.currentIndex = index  //this为vc对象,执行时绑定的
     }, 50),
-    //鼠标移除时
+    //鼠标移除一级分类时
     leaveIndex() {
+      //不改变背景颜色
       this.currentIndex = -1
+      //不是home页面时:隐藏三级联动菜单
+      if (this.$route.path != '/home') {
+        this.isShow = false
+      }
     },
     //鼠标点击时三级联动菜单时
     goSearch(event) {
-      //得到自定义属性
+      //得到自定义属性,htnl不识别大小写，所以返回的属性名是小写的
       const { categoryname, category1id, category2id, category3id } = event.target.dataset
 
       if (categoryname) {
@@ -85,18 +101,24 @@ export default {
         let query = { categoryName: categoryname }
         if (category1id) {
           //点击的是一级分类
-          query.category1Id = category1id 
+          query.category1Id = category1id
         } else if (category2id) {
           //点击的是二级分类
-          query.category2Id = category2id 
+          query.category2Id = category2id
         } else {
           //点击的是三级分类
-          query.category3Id = category3id 
+          query.category3Id = category3id
         }
         //整理参数
         location.query = query
         //跳转到搜索路由
         this.$router.push(location)
+      }
+    },
+    //不是home页面时:当鼠标移入商品分类时，展示三级联动菜单
+    showList() {
+      if (this.$route.path != '/home') {
+        this.isShow = true
       }
     }
   },
@@ -148,6 +170,7 @@ export default {
       position: absolute;
       background: #fafafa;
       z-index: 999;
+      overflow: hidden;
 
       .all-sort-list2 {
         .item {
@@ -223,6 +246,17 @@ export default {
           background-color: skyblue;
         }
       }
+    }
+    //进入的起点，离开的终点
+    .sort-enter,.sort-leave-to{
+        height:0px;
+    }
+    .sort-enter-active,.sort-leave-active{
+      transition: .5s linear;
+    }
+    //进入的终点，离开的起点
+    .sort-enter-to,.sort-leave{
+      height: 461px;
     }
   }
 }
