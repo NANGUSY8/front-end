@@ -10,6 +10,8 @@ Vue.component(TypeNav.name, TypeNav)
 
 //引入路由
 import router from './router'
+//引入轮播图样式
+import 'swiper/css/swiper.min.css'
 
 //引入mockServer,模拟数据
 import '@/mock/mockServer'

@@ -19,7 +19,10 @@ export default {
   mounted() {
   //挂载完毕，通知Vuex向服务器发送请求,获取商品列表数据
     this.$store.dispatch('home/getCategoryList', 'getCategoryList')
+    //通知Vuex从mock接口获取轮播图的模拟数据
+    this.$store.dispatch('home/getBannerList', 'getBannerList')
   },
+  
 }
 </script>
 
