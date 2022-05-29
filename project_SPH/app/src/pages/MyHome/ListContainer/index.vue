@@ -104,7 +104,17 @@
 
 <script>
 export default {
-    name: 'ListContainer'
+    name: 'ListContainer',
+    mounted() {
+        //通知Vuex向mock请求虚拟数据,获取轮播图数据
+        this.$store.dispatch('home/getBannerList','getBannerList')
+    },
+    data() {
+        return {
+            //轮播图数据
+            
+        }
+    },
 }
 </script>
 
