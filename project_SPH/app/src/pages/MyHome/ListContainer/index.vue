@@ -109,7 +109,8 @@ import Swiper from 'swiper'
 export default {
     name: 'ListContainer',
     mounted() {
-
+        //通知Vuex从mock接口获取轮播图的模拟数据
+        this.$store.dispatch('home/getBannerList', 'getBannerList')
     },
     computed: {
         //向仓库获取轮播图数据

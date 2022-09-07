@@ -91,7 +91,7 @@ export default {
     },
     //鼠标点击时三级联动菜单时
     goSearch(event) {
-      //得到自定义属性,htnl不识别大小写，所以返回的属性名是小写的
+      //得到自定义属性,html不识别大小写，所以返回的属性名是小写的
       const { categoryname, category1id, category2id, category3id } = event.target.dataset
 
       if (categoryname) {

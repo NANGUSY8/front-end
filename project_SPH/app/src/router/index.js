@@ -46,7 +46,7 @@ export default new VueRouter({
                 show:false
             }
         },
-        //重定向
+        //重定向,在项目运行起来时,访问/,定向到首页
         {
             path:'*',
             redirect:'/home'

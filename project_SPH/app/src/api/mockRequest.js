@@ -7,7 +7,7 @@ import "nprogress/nprogress.css"
 
 //创建axios实例
 const mockRequests = axios.create({
-    //基础路径，默认添加
+    //基础路径，发送请求时默认路径会添加
     baseURL: '/mock',
     //请求超时时间
     timeout: 5000,

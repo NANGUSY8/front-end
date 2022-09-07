@@ -7,7 +7,7 @@ import "nprogress/nprogress.css"
 
 //创建axios实例
 const requests = axios.create({
-    //基础路径，默认添加
+    //基础路径，发送请求时默认路径会添加
     baseURL: '/api',
     //请求超时时间
     timeout: 5000,
@@ -17,6 +17,7 @@ const requests = axios.create({
 requests.interceptors.request.use((config) => {
     //进度条开始
     nprogress.start()
+    //配置对象:里面的header属性很重要
     return config
 })
 
