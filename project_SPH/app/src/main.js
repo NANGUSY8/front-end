@@ -9,11 +9,9 @@ import TypeNav from '@/components/TypeNav'
 Vue.component(TypeNav.name, TypeNav)
 
 //引入路由
-<<<<<<< HEAD
 import router from '@/router'
-=======
-import router from './router'
->>>>>>> ba226b3d72f8d1e9ffe656d536d4cf08f987df3a
+
+
 //引入轮播图样式
 import 'swiper/css/swiper.min.css'
 

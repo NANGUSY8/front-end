@@ -17,3 +17,9 @@ export const reqBannerList = () => mockRequests({
     url: '/banners',
     method: 'get'
 })
+
+//设置首页中floor接口
+export const reqFloorList = () => mockRequests({
+    url: '/floors',
+    method: 'get'
+})
