@@ -109,8 +109,12 @@ import Swiper from 'swiper'
 export default {
     name: 'ListContainer',
     mounted() {
+<<<<<<< HEAD
         //通知Vuex从mock接口获取轮播图的模拟数据
         this.$store.dispatch('home/getBannerList', 'getBannerList')
+=======
+
+>>>>>>> ba226b3d72f8d1e9ffe656d536d4cf08f987df3a
     },
     computed: {
         //向仓库获取轮播图数据
@@ -222,6 +226,7 @@ export default {
                         height: 40px;
                         display: block;
                     }
+<<<<<<< HEAD
 
                     .service-intro {
                         line-height: 22px;
@@ -229,6 +234,15 @@ export default {
                         display: block;
                     }
 
+=======
+
+                    .service-intro {
+                        line-height: 22px;
+                        width: 60px;
+                        display: block;
+                    }
+
+>>>>>>> ba226b3d72f8d1e9ffe656d536d4cf08f987df3a
                     &:nth-child(1) {
                         .list-item {
                             background-position: 0px -5px;
