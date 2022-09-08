@@ -12,6 +12,11 @@ import MySearch from '@/pages/MySearch'
 import MyLogin from '@/pages/MyLogin'
 import MyRegister from '@/pages/MyRegister'
 import MyHome from '@/pages/MyHome'
+const originalPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 //创建实例对象，去管理路由规则
 export default new VueRouter({

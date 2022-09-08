@@ -23,3 +23,10 @@ export const reqFloorList = () => mockRequests({
     url: '/floors',
     method: 'get'
 })
+
+//设置搜索商品中的接口
+export const reqSearchInfo = (params) => requests({
+    url: '/list',
+    method: 'post',
+    data: params
+})
