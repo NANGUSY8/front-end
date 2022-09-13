@@ -11,15 +11,23 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <!-- 展示分类面包屑 -->
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName }}<i @click="removeCategoryName">×</i>
+            </li>
+            <!-- 展示搜索关键字 -->
+            <li class="with-x" v-if="searchParams.keyword">
+              {{ searchParams.keyword }}<i @click="removeKeyword">×</i>
+            </li>
+            <!-- 展示品牌 -->
+            <li class="with-x" v-if="searchParams.trademark">
+              {{ searchParams.trademark.split(":")[1] }}<i @click="removeTrademark">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector @trademarkInfo="trademarkInfo"/>
 
         <!--details:详情-->
         <div class="details clearfix">
@@ -165,24 +173,60 @@ export default {
     //因为用多次发送请求给服务器,所以将其封装成一个函数
     getData() {
       //通知Vuex从接口获取搜索商品的模拟数据
-      this.$store.dispatch("search/getSearchInfo", this.searchParams);
+      this.$store.dispatch("search/getSearchInfo", this.searchParams)
     },
+    //删除面包屑中的分类名
+    removeCategoryName(){
+      //置空传给服务器的参数
+      this.searchParams.categoryName = undefined
+      this.searchParams.category1Id = undefined
+      this.searchParams.category2Id = undefined
+      this.searchParams.category3Id = undefined
+      //删除路由的 query参数
+      this.$router.push({name:"search",params:this.$route.params})
+      //这里不用发请求是因为 watch会监听路由改变,改变了就发请求
+    },
+    //删除面包屑中的搜素关键字
+    removeKeyword(){
+      //置空传给服务器的参数
+      this.searchParams.keyword = undefined
+      //删除路由的 params参数
+      this.$router.push({name:"search",query:this.$route.query})
+      //这里不用发请求是因为 watch会监听路由改变,改变了就发请求
+
+      //通知头部中搜索栏删除关键字
+      this.$bus.$emit("delKeyword")
+    },
+    //删除面包屑中的品牌名
+    removeTrademark(){
+      //置空传给服务器的参数
+      this.searchParams.trademark = undefined
+      //向服务器发送请求
+      this.getData()
+    },
+    //接收子组件传递的参数改变品牌名
+    trademarkInfo(trademark){
+      // console.log(trademark)
+      this.searchParams.trademark = trademark
+      //向服务器发送请求
+      this.getData()
+    }
   },
   //监听属性
-  watch:{
+  watch: {
     //路由信息发生改变=>向服务器发送请求
-    $route(newValue,oldValue){
-      //清空id
-      this.searchParams.category1Id = ''
-      this.searchParams.category2Id = ''
-      this.searchParams.category3Id = ''
+    $route(newValue, oldValue) {
+      //清空id,值为 undefined的参数不会带给服务器,减少服务器带宽
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
       //合并参数
-      Object.assign(this.searchParams,this.$route.query,this.$route.params)
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
       //发送请求
-      this.getData()
-      console.log('search'+this.searchParams);
-    }
-  }
+      this.getData();
+      // console.log("search" + this.searchParams);
+    },
+  },
 };
 </script>
 

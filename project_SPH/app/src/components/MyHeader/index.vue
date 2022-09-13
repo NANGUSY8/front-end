@@ -55,6 +55,11 @@
 <script>
 export default {
   name: "MyHeader",
+  mounted(){
+    this.$bus.$on("delKeyword",()=>{
+        this.keyword=""
+    })
+  },
   data() {
     return {
       keyword: "",
