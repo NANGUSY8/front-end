@@ -7,7 +7,7 @@
           <li
             v-for="(trademark, index) in trademarkList"
             :key="trademark.tmId"
-            @click="ClickTrademark(trademark)"
+            @click="clickTrademark(trademark)"
           >
             {{ trademark.tmName }}
           </li>
@@ -26,7 +26,7 @@
       <div class="fl key">{{ attr.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue, index) in attr.attrValueList" :key="index">
+          <li v-for="(attrValue, index) in attr.attrValueList" :key="index" @click="clickAttr(attr,attrValue)">
             <a>{{ attrValue }}</a>
           </li>
         </ul>
@@ -44,7 +44,9 @@ export default {
   mounted() {},
   data() {
     return {
-      trademark: "",
+      // trademark: "",
+      // attr:"",
+      // attrValue:""
     };
   },
   computed: {
@@ -52,12 +54,17 @@ export default {
   },
 
   methods: {
-    ClickTrademark(trademark) {
-      this.trademark = `${trademark.tmId}:${trademark.tmName}`;
+    clickTrademark(trademark) {
+      trademark = `${trademark.tmId}:${trademark.tmName}`;
       //通过自定义事件给父组件传参
-      this.$emit("trademarkInfo", this.trademark);
+      this.$emit("trademarkInfo", trademark);
+      
       // console.log(this.trademark);
     },
+    clickAttr(attr,attrValue){
+      //通过自定义事件给父组件传参
+      this.$emit("attrInfo", attr,attrValue);
+    }
   },
 };
 </script>

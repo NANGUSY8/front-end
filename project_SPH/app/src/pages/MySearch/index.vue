@@ -23,11 +23,15 @@
             <li class="with-x" v-if="searchParams.trademark">
               {{ searchParams.trademark.split(":")[1] }}<i @click="removeTrademark">×</i>
             </li>
+            <!-- 展示售卖属性 -->
+            <li class="with-x" v-for="(attr,index) in searchParams.props" :key="index">
+              {{ attr.split(":")[1] }}<i @click="removeAttr(index)">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @trademarkInfo="trademarkInfo"/>
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo"/>
 
         <!--details:详情-->
         <div class="details clearfix">
@@ -155,7 +159,7 @@ export default {
         order: "1:desc", //排序
         pageNo: 1, //当前第几页
         pageSize: 10, //每一页需要展示多少条数据
-        props: [""], //平台属性的选择参数
+        props: [], //平台属性的选择参数
         trademark: "", //品牌参数
       },
     };
@@ -204,11 +208,26 @@ export default {
       //向服务器发送请求
       this.getData()
     },
+    ////删除面包屑中的售卖属性
+    removeAttr(index){
+      //删除指定的售卖属性
+      this.searchParams.props.splice(index,1)
+      //向服务器发送请求
+      this.getData()
+    },
     //接收子组件传递的参数改变品牌名
     trademarkInfo(trademark){
       // console.log(trademark)
       this.searchParams.trademark = trademark
       //向服务器发送请求
+      this.getData()
+    },
+    //接收子组件传递的参数改变品牌名
+    attrInfo(attr,attrValue){
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`
+      //整理参数
+      if(this.searchParams.props.indexOf(props)==-1) this.searchParams.props.push(props)
+      //发送请求
       this.getData()
     }
   },
