@@ -91,35 +91,7 @@
             </ul>
           </div>
           <!-- 分页器 -->
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <Pagination/>
         </div>
       </div>
     </div>
@@ -234,13 +206,13 @@ export default {
     changeOrder(flag){
       //点击之前的flag 1:综合,2:价格
       let originFlag = this.searchParams.order.split(":")[0]
-      //点击之前的order desc/asc 
-      let originOrder = this.searchParams.order.split(":")[1]
+      //点击之前的sort desc/asc 
+      let originSort = this.searchParams.order.split(":")[1]
       //现在的order参数
       let curOrder
       //如果点击之前的flag和现在的一致
       if(flag==originFlag){
-        curOrder = `${originFlag}:${originOrder=="desc"? "asc":"desc"}`
+        curOrder = `${originFlag}:${originSort=="desc"? "asc":"desc"}`
       }else{
         //不一致
         curOrder = `${flag}:desc`
