@@ -168,6 +168,21 @@ export default {
       this.$store.dispatch("search/getSearchInfo", this.searchParams);
     },
   },
+  //监听属性
+  watch:{
+    //路由信息发生改变=>向服务器发送请求
+    $route(newValue,oldValue){
+      //清空id
+      this.searchParams.category1Id = ''
+      this.searchParams.category2Id = ''
+      this.searchParams.category3Id = ''
+      //合并参数
+      Object.assign(this.searchParams,this.$route.query,this.$route.params)
+      //发送请求
+      this.getData()
+      console.log('search'+this.searchParams);
+    }
+  }
 };
 </script>
 
