@@ -38,23 +38,11 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li  :class={active:isOne} @click="changeOrder(1)">
+                  <a >综合<span v-show="isOne" :class="['iconfont',isDesc?'icon-down':'icon-up']"></span></a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li  :class={active:isTwo} @click="changeOrder(2)">
+                  <a>价格<span v-show="isTwo"  :class="['iconfont',isDesc?'icon-down':'icon-up']"></span></a>
                 </li>
               </ul>
             </div>
@@ -172,6 +160,18 @@ export default {
   },
   computed: {
     ...mapGetters("search", ["goodsList"]),
+    //判断排序是否为综合:1
+    isOne(){
+      return this.searchParams.order.indexOf('1') != -1
+    },
+    //判断排序是否为价格:2
+    isTwo(){
+      return this.searchParams.order.indexOf('2') != -1
+    },
+    //判断是否为desc
+    isDesc(){
+      return this.searchParams.order.indexOf("desc") !=-1
+    }
   },
   methods: {
     //因为用多次发送请求给服务器,所以将其封装成一个函数
@@ -217,7 +217,7 @@ export default {
     },
     //接收子组件传递的参数改变品牌名
     trademarkInfo(trademark){
-      // console.log(trademark)
+      // console.log(trademark) id:name
       this.searchParams.trademark = trademark
       //向服务器发送请求
       this.getData()
@@ -227,6 +227,26 @@ export default {
       let props = `${attr.attrId}:${attrValue}:${attr.attrName}`
       //整理参数
       if(this.searchParams.props.indexOf(props)==-1) this.searchParams.props.push(props)
+      //发送请求
+      this.getData()
+    },
+    //改变order参数
+    changeOrder(flag){
+      //点击之前的flag 1:综合,2:价格
+      let originFlag = this.searchParams.order.split(":")[0]
+      //点击之前的order desc/asc 
+      let originOrder = this.searchParams.order.split(":")[1]
+      //现在的order参数
+      let curOrder
+      //如果点击之前的flag和现在的一致
+      if(flag==originFlag){
+        curOrder = `${originFlag}:${originOrder=="desc"? "asc":"desc"}`
+      }else{
+        //不一致
+        curOrder = `${flag}:desc`
+      }
+      //改变提交给服务器的参数
+      this.searchParams.order = curOrder
       //发送请求
       this.getData()
     }
