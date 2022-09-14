@@ -73,9 +73,10 @@
               >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
+                    <!-- 点击图片跳转到商品详情页 -->
+                    <router-link :to="`/detail/${good.id}`"
                       ><img :src="good.defaultImg"
-                    /></a>
+                    /></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -158,7 +159,7 @@ export default {
       total: (state) => state.search.searchList.total,
       pageSize: (state) => state.search.searchList.pageSize,
       pageNo: (state) => state.search.searchList.pageNo,
-      totalPages: (state) => state.search.searchList.totalPages
+      totalPages: (state) => state.search.searchList.totalPages,
     }),
     //判断排序是否为综合:1
     isOne() {
