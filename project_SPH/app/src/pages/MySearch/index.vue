@@ -13,7 +13,8 @@
           <ul class="fl sui-tag">
             <!-- 展示分类面包屑 -->
             <li class="with-x" v-if="searchParams.categoryName">
-              {{ searchParams.categoryName }}<i @click="removeCategoryName">×</i>
+              {{ searchParams.categoryName
+              }}<i @click="removeCategoryName">×</i>
             </li>
             <!-- 展示搜索关键字 -->
             <li class="with-x" v-if="searchParams.keyword">
@@ -21,28 +22,43 @@
             </li>
             <!-- 展示品牌 -->
             <li class="with-x" v-if="searchParams.trademark">
-              {{ searchParams.trademark.split(":")[1] }}<i @click="removeTrademark">×</i>
+              {{ searchParams.trademark.split(":")[1]
+              }}<i @click="removeTrademark">×</i>
             </li>
             <!-- 展示售卖属性 -->
-            <li class="with-x" v-for="(attr,index) in searchParams.props" :key="index">
+            <li
+              class="with-x"
+              v-for="(attr, index) in searchParams.props"
+              :key="index"
+            >
               {{ attr.split(":")[1] }}<i @click="removeAttr(index)">×</i>
             </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo"/>
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details:详情-->
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li  :class={active:isOne} @click="changeOrder(1)">
-                  <a >综合<span v-show="isOne" :class="['iconfont',isDesc?'icon-down':'icon-up']"></span></a>
+                <li :class="{ active: isOne }" @click="changeOrder(1)">
+                  <a
+                    >综合<span
+                      v-show="isOne"
+                      :class="['iconfont', isDesc ? 'icon-down' : 'icon-up']"
+                    ></span
+                  ></a>
                 </li>
-                <li  :class={active:isTwo} @click="changeOrder(2)">
-                  <a>价格<span v-show="isTwo"  :class="['iconfont',isDesc?'icon-down':'icon-up']"></span></a>
+                <li :class="{ active: isTwo }" @click="changeOrder(2)">
+                  <a
+                    >价格<span
+                      v-show="isTwo"
+                      :class="['iconfont', isDesc ? 'icon-down' : 'icon-up']"
+                    ></span
+                  ></a>
                 </li>
               </ul>
             </div>
@@ -91,16 +107,22 @@
             </ul>
           </div>
           <!-- 分页器 -->
-          <Pagination/>
+          <Pagination
+            :pageNo="pageNo"
+            :pageSize="pageSize"
+            :total="total"
+            :totalPages="totalPages"
+            :continues="5"
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import SearchSelector from "@/pages/MySearch/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "MySearch",
@@ -132,96 +154,109 @@ export default {
   },
   computed: {
     ...mapGetters("search", ["goodsList"]),
+    ...mapState({
+      total: (state) => state.search.searchList.total,
+      pageSize: (state) => state.search.searchList.pageSize,
+      pageNo: (state) => state.search.searchList.pageNo,
+      totalPages: (state) => state.search.searchList.totalPages
+    }),
     //判断排序是否为综合:1
-    isOne(){
-      return this.searchParams.order.indexOf('1') != -1
+    isOne() {
+      return this.searchParams.order.indexOf("1") != -1;
     },
     //判断排序是否为价格:2
-    isTwo(){
-      return this.searchParams.order.indexOf('2') != -1
+    isTwo() {
+      return this.searchParams.order.indexOf("2") != -1;
     },
     //判断是否为desc
-    isDesc(){
-      return this.searchParams.order.indexOf("desc") !=-1
-    }
+    isDesc() {
+      return this.searchParams.order.indexOf("desc") != -1;
+    },
   },
   methods: {
     //因为用多次发送请求给服务器,所以将其封装成一个函数
     getData() {
       //通知Vuex从接口获取搜索商品的模拟数据
-      this.$store.dispatch("search/getSearchInfo", this.searchParams)
+      this.$store.dispatch("search/getSearchInfo", this.searchParams);
     },
     //删除面包屑中的分类名
-    removeCategoryName(){
+    removeCategoryName() {
       //置空传给服务器的参数
-      this.searchParams.categoryName = undefined
-      this.searchParams.category1Id = undefined
-      this.searchParams.category2Id = undefined
-      this.searchParams.category3Id = undefined
+      this.searchParams.categoryName = undefined;
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
       //删除路由的 query参数
-      this.$router.push({name:"search",params:this.$route.params})
+      this.$router.push({ name: "search", params: this.$route.params });
       //这里不用发请求是因为 watch会监听路由改变,改变了就发请求
     },
     //删除面包屑中的搜素关键字
-    removeKeyword(){
+    removeKeyword() {
       //置空传给服务器的参数
-      this.searchParams.keyword = undefined
+      this.searchParams.keyword = undefined;
       //删除路由的 params参数
-      this.$router.push({name:"search",query:this.$route.query})
+      this.$router.push({ name: "search", query: this.$route.query });
       //这里不用发请求是因为 watch会监听路由改变,改变了就发请求
 
       //通知头部中搜索栏删除关键字
-      this.$bus.$emit("delKeyword")
+      this.$bus.$emit("delKeyword");
     },
     //删除面包屑中的品牌名
-    removeTrademark(){
+    removeTrademark() {
       //置空传给服务器的参数
-      this.searchParams.trademark = undefined
+      this.searchParams.trademark = undefined;
       //向服务器发送请求
-      this.getData()
+      this.getData();
     },
     ////删除面包屑中的售卖属性
-    removeAttr(index){
+    removeAttr(index) {
       //删除指定的售卖属性
-      this.searchParams.props.splice(index,1)
+      this.searchParams.props.splice(index, 1);
       //向服务器发送请求
-      this.getData()
+      this.getData();
     },
     //接收子组件传递的参数改变品牌名
-    trademarkInfo(trademark){
+    trademarkInfo(trademark) {
       // console.log(trademark) id:name
-      this.searchParams.trademark = trademark
+      this.searchParams.trademark = trademark;
       //向服务器发送请求
-      this.getData()
+      this.getData();
     },
     //接收子组件传递的参数改变品牌名
-    attrInfo(attr,attrValue){
-      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`
+    attrInfo(attr, attrValue) {
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
       //整理参数
-      if(this.searchParams.props.indexOf(props)==-1) this.searchParams.props.push(props)
+      if (this.searchParams.props.indexOf(props) == -1)
+        this.searchParams.props.push(props);
       //发送请求
-      this.getData()
+      this.getData();
     },
     //改变order参数
-    changeOrder(flag){
+    changeOrder(flag) {
       //点击之前的flag 1:综合,2:价格
-      let originFlag = this.searchParams.order.split(":")[0]
-      //点击之前的sort desc/asc 
-      let originSort = this.searchParams.order.split(":")[1]
+      let originFlag = this.searchParams.order.split(":")[0];
+      //点击之前的sort desc/asc
+      let originSort = this.searchParams.order.split(":")[1];
       //现在的order参数
-      let curOrder
+      let curOrder;
       //如果点击之前的flag和现在的一致
-      if(flag==originFlag){
-        curOrder = `${originFlag}:${originSort=="desc"? "asc":"desc"}`
-      }else{
+      if (flag == originFlag) {
+        curOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
         //不一致
-        curOrder = `${flag}:desc`
+        curOrder = `${flag}:desc`;
       }
       //改变提交给服务器的参数
-      this.searchParams.order = curOrder
+      this.searchParams.order = curOrder;
       //发送请求
-      this.getData()
-    }
+      this.getData();
+    },
+    //使用自定义事件获取子组件的当前页
+    getPageNo(pageNo) {
+      this.searchParams.pageNo = pageNo;
+      //给服务器发送请求
+      this.getData();
+    },
   },
   //监听属性
   watch: {

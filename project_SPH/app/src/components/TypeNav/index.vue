@@ -19,25 +19,46 @@
         <div class="sort" v-show="isShow">
           <!-- 利用事件委派+编程式导航完成路由的跳转 -->
           <div class="all-sort-list2" @click="goSearch">
-            <div class="item bo" v-for="(c1, index) in categoryList.slice(0, 16)" :key="c1.categoryId"
-              :class="{ cur: currentIndex == index }">
+            <div
+              class="item bo"
+              v-for="(c1, index) in categoryList.slice(0, 16)"
+              :key="c1.categoryId"
+              :class="{ cur: currentIndex == index }"
+            >
               <h3 @mouseenter="changeIndex(index)">
                 <!-- 自定义属性以data-开头才能使用dataset属性 -->
-                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
+                <a
+                  :data-categoryName="c1.categoryName"
+                  :data-category1Id="c1.categoryId"
+                  >{{ c1.categoryName }}</a
+                >
               </h3>
               <!-- 二级分类 -->
-              <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
-                <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
+              <div
+                class="item-list clearfix"
+                :style="{ display: currentIndex == index ? 'block' : 'none' }"
+              >
+                <div
+                  class="subitem"
+                  v-for="c2 in c1.categoryChild"
+                  :key="c2.categoryId"
+                >
                   <dl class="fore">
                     <dt>
-                      <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName
-                      }}</a>
+                      <a
+                        :data-categoryName="c2.categoryName"
+                        :data-category2Id="c2.categoryId"
+                        >{{ c2.categoryName }}</a
+                      >
                     </dt>
                     <!-- 三级分类 -->
                     <dd>
                       <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName
-                        }}</a>
+                        <a
+                          :data-categoryName="c3.categoryName"
+                          :data-category3Id="c3.categoryId"
+                          >{{ c3.categoryName }}</a
+                        >
                       </em>
                     </dd>
                   </dl>
@@ -47,22 +68,20 @@
           </div>
         </div>
       </transition>
-
     </div>
   </div>
 </template>
 
 <script>
-
-import { mapState } from 'vuex'
-import throttle from 'lodash/throttle'
+import { mapState } from "vuex";
+import throttle from "lodash/throttle";
 
 export default {
-  name: 'TypeNav',
+  name: "TypeNav",
   mounted() {
     //路径是首页，则显示三级联动菜单
-    if (this.$route.path == '/home') {
-      this.isShow = true
+    if (this.$route.path == "/home") {
+      this.isShow = true;
     }
 
     // if(this.$route.)
@@ -72,64 +91,65 @@ export default {
       //标记当前鼠标移入的一级分类的索引值
       currentIndex: -1,
       //标记商品分类导航是否展示
-      isShow:false
-    }
+      isShow: false,
+    };
   },
   methods: {
     //当鼠标移入一级分类时，改变currentIndex值为当前的元素的index值
     changeIndex: throttle(function (index) {
-      this.currentIndex = index  //this为vc对象,执行时绑定的
+      this.currentIndex = index; //this为vc对象,执行时绑定的
     }, 50),
     //鼠标移除一级分类时
     leaveIndex() {
       //不改变背景颜色
-      this.currentIndex = -1
+      this.currentIndex = -1;
       //不是home页面时:隐藏三级联动菜单
-      if (this.$route.path != '/home') {
-        this.isShow = false
+      if (this.$route.path != "/home") {
+        this.isShow = false;
       }
     },
     //鼠标点击时三级联动菜单时
     goSearch(event) {
       //得到自定义属性,html不识别大小写，所以返回的属性名是小写的
-      const { categoryname, category1id, category2id, category3id } = event.target.dataset
+      const { categoryname, category1id, category2id, category3id } =
+        event.target.dataset;
 
       if (categoryname) {
         //存在该属性，说明是点击的是a标签
-        let location = { name: 'search' }
-        let query = { categoryName: categoryname }
+        let location = { name: "search" };
+        let query = { categoryName: categoryname };
         if (category1id) {
           //点击的是一级分类
-          query.category1Id = category1id
+          query.category1Id = category1id;
         } else if (category2id) {
           //点击的是二级分类
-          query.category2Id = category2id
+          query.category2Id = category2id;
         } else {
           //点击的是三级分类
-          query.category3Id = category3id
+          query.category3Id = category3id;
         }
         //整理参数
-        location.query = query
+        location.query = query;
         //合并params参数
-        location.params = this.$route.params
-        
+        location.params = this.$route.params;
+
         //跳转到搜索路由
-        this.$router.push(location)
+        this.$router.push(location);
       }
     },
     //不是home页面时:当鼠标移入商品分类时，展示三级联动菜单
     showList() {
-      if (this.$route.path != '/home') {
-        this.isShow = true
+      if (this.$route.path != "/home") {
+        this.isShow = true;
       }
-    }
+    },
   },
   computed: {
     ...mapState({
-      categoryList: state => state.home.categoryList
-    })
-  }
-}
+      categoryList: (state) => state.home.categoryList,
+    }),
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -258,7 +278,7 @@ export default {
 
     .sort-enter-active,
     .sort-leave-active {
-      transition: all .3s linear;
+      transition: all 0.3s linear;
       overflow: hidden;
     }
 

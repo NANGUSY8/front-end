@@ -55,10 +55,10 @@
 <script>
 export default {
   name: "MyHeader",
-  mounted(){
-    this.$bus.$on("delKeyword",()=>{
-        this.keyword=""
-    })
+  mounted() {
+    this.$bus.$on("delKeyword", () => {
+      this.keyword = "";
+    });
   },
   data() {
     return {
@@ -77,8 +77,8 @@ export default {
       };
       //   this.$route.params.keyword = this.keyword
       this.$router.push(location);
-    //   console.log(location);
-    //   console.log(this.$route.params);
+      //   console.log(location);
+      //   console.log(this.$route.params);
     },
   },
 };

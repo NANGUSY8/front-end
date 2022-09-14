@@ -37,7 +37,7 @@ export default {
   computed: {
     //向仓库获取floor数据
     ...mapState({
-      floorList: (state) => state.home.floorList
+      floorList: (state) => state.home.floorList,
     }),
   },
 };
