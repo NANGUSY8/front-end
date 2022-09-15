@@ -30,3 +30,9 @@ export const reqSearchInfo = (params) => requests({
     method: 'post',
     data: params
 })
+
+//设置详情页的接口
+export const reqGoodsList = (skuId) => requests({
+    url: `/item/${skuId}`,
+    method: 'get'
+})
