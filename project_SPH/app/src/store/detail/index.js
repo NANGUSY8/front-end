@@ -5,9 +5,12 @@ import {
     reqGoodsList,
     reqAddOrUpdateShopCart
 } from '@/api'
+//引入 uuid 生成游客身份
+import { getUUID } from "@/utils/uuid_token"
 //数据
 const state = {
-    goodsList: {}
+    goodsList: {},
+    uuid_token: getUUID()
 }
 //更新数据
 const mutations = {
@@ -24,13 +27,13 @@ const actions = {
         }
     },
     //将加入购物车的商品数量和id提交给服务器
-    async postShopCartInfo({commit},{skuId,skuNum}){
-        let result = await reqAddOrUpdateShopCart(skuId,skuNum)
+    async postShopCartInfo({ commit }, { skuId, skuNum }) {
+        let result = await reqAddOrUpdateShopCart(skuId, skuNum)
         //只用提交数据给服务器,服务器不用返回信息,所以不用三连环
-        if(result.code==200){
+        if (result.code == 200) {
             //成功
             return "ok"
-        }else{
+        } else {
             //失败
             return new Error("fail")
         }
@@ -40,11 +43,11 @@ const actions = {
 //数据加工:简化数据
 const getters = {
     // state:当前仓库的state,不是大仓库的state
-    categoryView(state){
+    categoryView(state) {
         //如果goodsList为空,则categoryView为undefined,{}防止这种情况
         return state.goodsList.categoryView || {}
     },
-    skuInfo(state){
+    skuInfo(state) {
         return state.goodsList.skuInfo || {}
     }
 }

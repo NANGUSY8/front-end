@@ -7,6 +7,7 @@ import MyRegister from '@/pages/MyRegister'
 import MyHome from '@/pages/MyHome'
 import MyDetail from '@/pages/MyDetail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
+import ShopCart from "@/pages/ShopCart"
 
 export default [
     {
@@ -49,7 +50,17 @@ export default [
     },
     {
         path: '/addcartsuccess',
+        name: "addcartsuccess",
         component: AddCartSuccess,
+        meta: {
+            //控制MyFooter组件是否显示
+            show: true
+        }
+    },
+    {
+        path: '/shopcart',
+        name: "shopcart",
+        component: ShopCart,
         meta: {
             //控制MyFooter组件是否显示
             show: true

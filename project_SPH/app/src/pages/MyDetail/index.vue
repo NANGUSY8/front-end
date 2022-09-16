@@ -16,9 +16,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom :skuImageList="skuImageList"/>
+          <Zoom :skuImageList="skuImageList" />
           <!-- 小图列表 -->
-          <ImageList :skuImageList="skuImageList"/>
+          <ImageList :skuImageList="skuImageList" />
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -83,9 +83,14 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" v-model="skuNum"/>
+                <input autocomplete="off" class="itxt" v-model="skuNum" />
                 <a href="javascript:" class="plus" @click="skuNum++">+</a>
-                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNum=1">-</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 ? skuNum-- : (skuNum = 1)"
+                  >-</a
+                >
               </div>
               <div class="add">
                 <a @click="changeSkuNum">加入购物车</a>
@@ -337,10 +342,10 @@ export default {
     ImageList,
     Zoom,
   },
-  data(){
-    return{
-      skuNum:1
-    }
+  data() {
+    return {
+      skuNum: 1,
+    };
   },
   mounted() {
     //派发请求
@@ -348,31 +353,41 @@ export default {
   },
   computed: {
     ...mapGetters("detail", ["categoryView", "skuInfo"]),
-    skuImageList(){
-      return this.skuInfo.skuImageList || [{}]
-    }
+    skuImageList() {
+      return this.skuInfo.skuImageList || [{}];
+    },
   },
-  methods:{
+  methods: {
     //根据用户输入改变商品数量+将数据传给服务器
-    async changeSkuNum(){
-      let value=this.skuNum *1
+    async changeSkuNum() {
+      let value = this.skuNum * 1;
       //判断用户输入是否合法
-      if(isNaN(value)){
+      if (isNaN(value)) {
         //不是数值
-        this.skuNum=1
-      }else{
+        this.skuNum = 1;
+      } else {
         //是数值,转换为整数
-        this.skuNum=parseInt(value)
+        this.skuNum = parseInt(value);
       }
       //通知vuex给服务器发请求
-      await this.$store.dispatch("detail/postShopCartInfo",{skuid:this.$route.params.skuid,skuNum:this.skuNum})
-      .then(()=>{
-        //成功,路由跳转到加入购物车成功页面
-        this.$router.push("/addcartsuccess")
-      })
-    }
-  }
-  
+      await this.$store
+        .dispatch("detail/postShopCartInfo", {
+          skuid: this.$route.params.skuid,
+          skuNum: this.skuNum,
+        })
+        .then(() => {
+          //成功,将数据会话存储+路由跳转到加入购物车成功页面
+          sessionStorage.setItem("SKUINFO", JSON.stringify(this.skuInfo));
+          this.$router.push({
+            name: "addcartsuccess",
+            query: { skuNum: this.skuNum },
+          });
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    },
+  },
 };
 </script>
 

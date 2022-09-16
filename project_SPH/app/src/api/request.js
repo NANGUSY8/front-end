@@ -4,7 +4,8 @@ import axios from 'axios'
 import nprogress from 'nprogress'
 //引入进度条样式
 import "nprogress/nprogress.css"
-
+//引入仓库
+import store from '@/store'
 //创建axios实例
 const requests = axios.create({
     //基础路径，发送请求时默认路径会添加
@@ -15,6 +16,11 @@ const requests = axios.create({
 
 //设置请求拦截器
 requests.interceptors.request.use((config) => {
+    //判断是否有uuid
+    if(store.state.detail.uuid_token){
+       //设置请求头
+       config.headers.userTempId = store.state.detail.uuid_token
+    }
     //进度条开始
     nprogress.start()
     //配置对象:里面的header属性很重要

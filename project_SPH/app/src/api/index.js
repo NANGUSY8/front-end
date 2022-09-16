@@ -42,3 +42,9 @@ export const reqAddOrUpdateShopCart = (skuId,skuNum) => requests({
     url: `/cart/addToCart/${skuId}/${skuNum}`,
     method: 'post'
 })
+
+//设置请求购物车列表的接口
+export const reqCartList = () => requests({
+    url: '/cart/cartList',
+    method: 'get'
+})
