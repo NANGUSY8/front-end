@@ -6,6 +6,7 @@ import MyLogin from '@/pages/MyLogin'
 import MyRegister from '@/pages/MyRegister'
 import MyHome from '@/pages/MyHome'
 import MyDetail from '@/pages/MyDetail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
 
 export default [
     {
@@ -43,6 +44,14 @@ export default [
         path: '/detail/:skuid?',
         component: MyDetail,
         meta: {
+            show: true
+        }
+    },
+    {
+        path: '/addcartsuccess',
+        component: AddCartSuccess,
+        meta: {
+            //控制MyFooter组件是否显示
             show: true
         }
     },

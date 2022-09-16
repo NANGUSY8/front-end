@@ -2,7 +2,8 @@
 
 //引入接口
 import {
-    reqGoodsList
+    reqGoodsList,
+    reqAddOrUpdateShopCart
 } from '@/api'
 //数据
 const state = {
@@ -20,6 +21,18 @@ const actions = {
         let result = await reqGoodsList(skuid)
         if (result.code == 200) {
             commit("GETGOODSLIST", result.data)
+        }
+    },
+    //将加入购物车的商品数量和id提交给服务器
+    async postShopCartInfo({commit},{skuId,skuNum}){
+        let result = await reqAddOrUpdateShopCart(skuId,skuNum)
+        //只用提交数据给服务器,服务器不用返回信息,所以不用三连环
+        if(result.code==200){
+            //成功
+            return "ok"
+        }else{
+            //失败
+            return new Error("fail")
         }
     }
 

@@ -36,3 +36,9 @@ export const reqGoodsList = (skuId) => requests({
     url: `/item/${skuId}`,
     method: 'get'
 })
+
+//设置加入购物车将商品信息发送给服务器的接口
+export const reqAddOrUpdateShopCart = (skuId,skuNum) => requests({
+    url: `/cart/addToCart/${skuId}/${skuNum}`,
+    method: 'post'
+})
