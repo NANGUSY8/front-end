@@ -20,6 +20,7 @@ requests.interceptors.request.use((config) => {
     if(store.state.detail.uuid_token){
        //设置请求头
        config.headers.userTempId = store.state.detail.uuid_token
+    //    console.log(config.headers.userTempId)
     }
     //进度条开始
     nprogress.start()

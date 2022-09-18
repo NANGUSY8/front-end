@@ -27,8 +27,9 @@ const actions = {
         }
     },
     //将加入购物车的商品数量和id提交给服务器
-    async postShopCartInfo({ commit }, { skuId, skuNum }) {
-        let result = await reqAddOrUpdateShopCart(skuId, skuNum)
+    async postShopCartInfo({ commit }, { skuid, skuNum }) {
+        // console.log(skuid,skuNum)
+        let result = await reqAddOrUpdateShopCart(skuid, skuNum)
         //只用提交数据给服务器,服务器不用返回信息,所以不用三连环
         if (result.code == 200) {
             //成功

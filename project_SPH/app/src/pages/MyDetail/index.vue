@@ -369,6 +369,7 @@ export default {
         //是数值,转换为整数
         this.skuNum = parseInt(value);
       }
+      // console.log(this.$route.params.skuid)
       //通知vuex给服务器发请求
       await this.$store
         .dispatch("detail/postShopCartInfo", {
