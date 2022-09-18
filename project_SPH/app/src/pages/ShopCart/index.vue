@@ -31,21 +31,32 @@
             <span class="price">{{ cartInfo.skuPrice }}.00</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins" >-</a>
+            <a
+              class="mins"
+              @click="handler('minus', -1, cartInfo)"
+              >-</a
+            >
             <input
               autocomplete="off"
               type="text"
               :value="cartInfo.skuNum"
               minnum="1"
               class="itxt"
+              @change="handler('change', $event.target.value, cartInfo)"
             />
-            <a href="javascript:void(0)" class="plus">+</a>
+            <a
+              class="plus"
+              @click="handler('plus', 1, cartInfo)"
+              >+</a
+            >
           </li>
           <li class="cart-list-con6">
-            <span class="sum">{{ cartInfo.skuPrice * cartInfo.skuNum }}.00</span>
+            <span class="sum"
+              >{{ cartInfo.skuPrice * cartInfo.skuNum }}.00</span
+            >
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a href="#none" class="sindelet" @click="deleteCart(cartInfo.skuId)">删除</a>
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -66,7 +77,7 @@
         <div class="chosed">已选择 <span>0</span>件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） :</em>
-          <i class="summoney">{{sumPrice}}</i>
+          <i class="summoney">{{ sumPrice }}</i>
         </div>
         <div class="sumbtn">
           <a class="sum-btn" href="###" target="_blank">结算</a>
@@ -78,6 +89,9 @@
 
 <script>
 import { mapGetters } from "vuex";
+//引入节流
+import throttle from "lodash/throttle";
+
 export default {
   name: "ShopCart",
   mounted() {
@@ -91,21 +105,64 @@ export default {
       return this.cartList.cartInfoList || [];
     },
     //计算全部商品的总价
-    sumPrice(){
-      let sum = 0
-      this.cartInfoList.forEach((item)=>{
-        sum += item.skuPrice*item.skuNum
-      })
-      return sum.toFixed(2)
-    }
+    sumPrice() {
+      let sum = 0;
+      this.cartInfoList.forEach((item) => {
+        sum += item.skuPrice * item.skuNum;
+      });
+      return sum.toFixed(2);
+    },
   },
   methods: {
+    //发送请求
     getData() {
       this.$store.dispatch("shopcart/getCartList");
     },
+    //判断是否全选
     isAll() {
-      return cartInfoList.every((item)=>item.isChecked===1)
+      return cartInfoList.every((item) => item.isChecked === 1);
     },
+    //产品数量操作+节流,type:区分谁点 disNum:差值(1,-1,输入值),cartInfo:区分谁
+    handler: throttle(async function (type, disNum, cartInfo) {
+      switch (type) {
+        case "minus":
+          disNum = cartInfo.skuNum > 0 ? -1 : 0;
+          break;
+        case "plus":
+          disNum = 1;
+          break;
+        case "change":
+          //判断是否非法.是:为0,不是:获取差值
+          disNum = isNaN(disNum) || disNum < 0 ? 0 : disNum - cartInfo.skuNum;
+      }
+      //给服务器发送异步请求
+      await this.$store
+        .dispatch("detail/postShopCartInfo", {
+          skuid: cartInfo.skuId,
+          skuNum: disNum,
+        })
+        .then(() => {
+          //成功,获取购物车最新数据展示
+          this.getData();
+        })
+        .catch((err) => {
+          //失败
+          alert(err.message);
+        });
+    }, 500),
+    //产品删除操作
+    async deleteCart(skuId){
+      //发送异步请求
+      await this.$store.dispatch("shopcart/deleteCartById",skuId)
+      .then(() => {
+          //删除成功,获取购物车最新数据展示
+          this.getData();
+        })
+        .catch((err) => {
+          //失败
+          alert(err.message);
+        });
+    }
   },
 };
 </script>
