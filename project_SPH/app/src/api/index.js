@@ -38,7 +38,7 @@ export const reqGoodsList = (skuId) => requests({
 })
 
 //设置加入购物车将商品信息发送给服务器的接口
-export const reqAddOrUpdateShopCart = (skuId,skuNum) => requests({
+export const reqAddOrUpdateShopCart = (skuId, skuNum) => requests({
     url: `/cart/addToCart/${skuId}/${skuNum}`,
     method: 'post'
 })
@@ -53,4 +53,10 @@ export const reqCartList = () => requests({
 export const reqDeleteCart = (skuId) => requests({
     url: `/cart/deleteCart/${skuId}`,
     method: 'delete'
+})
+
+//设置更新购物车产品勾选状态的接口
+export const reqUpdateChecked = (skuId,isChecked) => requests({
+    url: `/cart/checkCart/${skuId}/${isChecked}`,
+    method: 'get'
 })

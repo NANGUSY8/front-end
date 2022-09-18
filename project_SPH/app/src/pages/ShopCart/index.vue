@@ -21,6 +21,7 @@
               type="checkbox"
               name="chk_list"
               :checked="cartInfo.isChecked === 1"
+              @click="updateChecked(cartInfo,$event)"
             />
           </li>
           <li class="cart-list-con2">
@@ -31,11 +32,7 @@
             <span class="price">{{ cartInfo.skuPrice }}.00</span>
           </li>
           <li class="cart-list-con5">
-            <a
-              class="mins"
-              @click="handler('minus', -1, cartInfo)"
-              >-</a
-            >
+            <a class="mins" @click="handler('minus', -1, cartInfo)">-</a>
             <input
               autocomplete="off"
               type="text"
@@ -44,11 +41,7 @@
               class="itxt"
               @change="handler('change', $event.target.value, cartInfo)"
             />
-            <a
-              class="plus"
-              @click="handler('plus', 1, cartInfo)"
-              >+</a
-            >
+            <a class="plus" @click="handler('plus', 1, cartInfo)">+</a>
           </li>
           <li class="cart-list-con6">
             <span class="sum"
@@ -56,7 +49,9 @@
             >
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet" @click="deleteCart(cartInfo.skuId)">删除</a>
+            <a href="#none" class="sindelet" @click="deleteCart(cartInfo.skuId)"
+              >删除</a
+            >
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -104,6 +99,10 @@ export default {
     cartInfoList() {
       return this.cartList.cartInfoList || [];
     },
+    //判断是否全选
+    isAll() {
+      return this.cartInfoList.every((item) => item.isChecked == 1);
+    },
     //计算全部商品的总价
     sumPrice() {
       let sum = 0;
@@ -118,10 +117,7 @@ export default {
     getData() {
       this.$store.dispatch("shopcart/getCartList");
     },
-    //判断是否全选
-    isAll() {
-      return cartInfoList.every((item) => item.isChecked === 1);
-    },
+    
     //产品数量操作+节流,type:区分谁点 disNum:差值(1,-1,输入值),cartInfo:区分谁
     handler: throttle(async function (type, disNum, cartInfo) {
       switch (type) {
@@ -150,11 +146,30 @@ export default {
           alert(err.message);
         });
     }, 500),
+    
     //产品删除操作
-    async deleteCart(skuId){
+    async deleteCart(skuId) {
       //发送异步请求
-      await this.$store.dispatch("shopcart/deleteCartById",skuId)
-      .then(() => {
+      await this.$store
+        .dispatch("shopcart/deleteCartById", skuId)
+        .then(() => {
+          //删除成功,获取购物车最新数据展示
+          this.getData();
+        })
+        .catch((err) => {
+          //失败
+          alert(err.message);
+        });
+    },
+
+    //产品状态勾选操作
+    async updateChecked(cartInfo,event){
+      //判断isChecked
+      let isChecked = event.target.checked? "1":"0"
+      //发送异步请求
+      await this.$store
+        .dispatch("shopcart/updateCheckedById", {skuId:cartInfo.skuId,isChecked:isChecked})
+        .then(() => {
           //删除成功,获取购物车最新数据展示
           this.getData();
         })

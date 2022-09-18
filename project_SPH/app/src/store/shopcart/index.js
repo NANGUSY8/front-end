@@ -3,7 +3,8 @@
 //引入接口
 import {
     reqCartList,
-    reqDeleteCart
+    reqDeleteCart,
+    reqUpdateChecked
 } from '@/api'
 
 //数据
@@ -35,10 +36,19 @@ const actions = {
             // console.log(result.data)
             return "ok"
         } else {
-            return new Promise(new Error("fail"))
+            return Promise.reject(new Error("faile"))
         }
     },
-
+    //更新产品的勾选状态
+    async updateCheckedById({ commit }, {skuId,isChecked}) {
+        let result = await reqUpdateChecked(skuId,isChecked)
+        if (result.code == 200) {
+            // console.log(result.data)
+            return "ok"
+        } else {
+            return Promise.reject(new Error("faile"))
+        }
+    },
 
 }
 //数据加工:简化数据

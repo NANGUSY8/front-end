@@ -36,7 +36,7 @@ const actions = {
             return "ok"
         } else {
             //失败
-            return new Error("fail")
+            return Promise.reject(new Error("faile")) 
         }
     }
 

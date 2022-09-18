@@ -17,10 +17,10 @@ const requests = axios.create({
 //设置请求拦截器
 requests.interceptors.request.use((config) => {
     //判断是否有uuid
-    if(store.state.detail.uuid_token){
-       //设置请求头
-       config.headers.userTempId = store.state.detail.uuid_token
-    //    console.log(config.headers.userTempId)
+    if (store.state.detail.uuid_token) {
+        //设置请求头
+        config.headers.userTempId = store.state.detail.uuid_token
+        //    console.log(config.headers.userTempId)
     }
     //进度条开始
     nprogress.start()
@@ -36,7 +36,7 @@ requests.interceptors.response.use((res) => {
     return res.data
 }, (err) => {
     //失败的回调函数
-    return Promise.reject(new Error('fail'))
+    return Promise.reject(new Error('faile'))
 })
 
 //向外默认暴露
