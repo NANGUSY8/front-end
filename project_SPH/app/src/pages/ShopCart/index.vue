@@ -60,11 +60,11 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAll" />
+        <input class="chooseAll" type="checkbox" :checked="isCheckedAll&&cartInfoList.length>0" @click="updateCheckedAll($event)"/>
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a href="#none" @click="deleteCheckedCart">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -100,7 +100,7 @@ export default {
       return this.cartList.cartInfoList || [];
     },
     //判断是否全选
-    isAll() {
+    isCheckedAll() {
       return this.cartInfoList.every((item) => item.isChecked == 1);
     },
     //计算全部商品的总价
@@ -177,6 +177,35 @@ export default {
           //失败
           alert(err.message);
         });
+    },
+
+    //删除选中的产品
+    async deleteCheckedCart(){
+      await this.$store.dispatch("shopcart/deleteCheckedCart")
+      .then(() => {
+          //删除成功,获取购物车最新数据展示
+          this.getData();
+        })
+        .catch((err) => {
+          //失败
+          alert(err.message);
+        });
+    },
+
+    //更新全选的状态
+    async updateCheckedAll(event){
+      let isChecked = event.target.checked? "1":"0"
+      // console.log(isChecked);
+      await this.$store.dispatch("shopcart/updateCheckedAll",isChecked)
+      .then(() => {
+          //更新成功,获取购物车最新数据展示
+          this.getData();
+        })
+        .catch((err) => {
+          //失败
+          alert(err.message);
+        });
+
     }
   },
 };

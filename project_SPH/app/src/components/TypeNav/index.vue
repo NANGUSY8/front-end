@@ -156,6 +156,10 @@ export default {
 .type-nav {
   border-bottom: 2px solid #e1251b;
 
+  a{
+    cursor: pointer;
+  }
+
   .container {
     width: 1200px;
     margin: 0 auto;

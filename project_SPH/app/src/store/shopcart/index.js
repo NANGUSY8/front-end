@@ -49,6 +49,24 @@ const actions = {
             return Promise.reject(new Error("faile"))
         }
     },
+    //删除选中的产品
+    deleteCheckedCart({dispatch,getters}){
+        let promiseAll =[]
+        getters.cartList.cartInfoList.forEach((item)=>{
+           let promise = item.isChecked==1?dispatch("deleteCartById",item.skuId):""
+           promiseAll.push(promise)
+        })
+        return Promise.all(promiseAll)
+    },
+    //更新全选的状态
+    updateCheckedAll({dispatch,getters},isChecked){
+        let promiseAll =[]
+        getters.cartList.cartInfoList.forEach((item)=>{
+           let promise = dispatch("updateCheckedById",{skuId:item.skuId,isChecked})
+           promiseAll.push(promise)
+        })
+        return Promise.all(promiseAll)
+    }
 
 }
 //数据加工:简化数据
