@@ -195,7 +195,6 @@ export default {
     //更新全选的状态
     async updateCheckedAll(event){
       let isChecked = event.target.checked? "1":"0"
-      // console.log(isChecked);
       await this.$store.dispatch("shopcart/updateCheckedAll",isChecked)
       .then(() => {
           //更新成功,获取购物车最新数据展示
