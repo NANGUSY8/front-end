@@ -73,3 +73,10 @@ export const reqRegister = (data) => requests({
     data,
     method: 'post'
 })
+
+//设置登录的接口
+export const reqLogin = (data) => requests({
+    url: '/user/passport/login',
+    data,
+    method: 'post'
+})

@@ -90,7 +90,7 @@ export default {
   methods: {
     //改变协议的同意状态
     changeAgree(event) {
-      console.log(event.target.checked)
+      // console.log(event.target.checked)
       this.isAgree = event.target.checked;
     },
     //获取验证码
@@ -117,8 +117,8 @@ export default {
         (await this.$store
           .dispatch("user/getRegister", { phone, code, password })
           .then(() => {
-            //成功,跳转到首页
-            this.$router.push("/home");
+            //成功,跳转到登录页面
+            this.$router.push("/login");
           })
           .catch((err) => {
             //失败
