@@ -7,6 +7,9 @@ import VueRouter from 'vue-router'
 //引入路由配置
 import routes from './routes'
 
+//引入仓库
+import store from '@/store'
+
 //使用插件
 Vue.use(VueRouter)
 
@@ -19,11 +22,45 @@ VueRouter.prototype.push = function push(location) {
 }
 
 //创建实例对象，去管理路由规则
-export default new VueRouter({
+const router = new VueRouter({
     routes,
     scrollBehavior(to, from, savedPosition) {
         // 始终滚动到顶部
         return { y: 0 }
-      },
+    },
 })
+
+//路由守卫:全局前置守卫
+router.beforeEach(async(to,from,next)=>{
+    if(store.state.user.token){
+        //如果有token
+        if(store.state.user.userInfo.name){
+            //如果已经登录
+            if(to.path=="/login"||to.path=="/register"){
+                //要去的路径为登录/注册页面,不放行,去首页
+                next("/home")
+            }else{
+                //去的不是登录/注册页面,放行
+                next()
+            }
+        }else{
+            //有token但是没登录,派发请求用户登录信息
+            await store.dispatch("user/getUserLoginInfo")
+            .then(()=>{
+                //成功
+                next()
+            })
+            .catch((err)=>{
+                //失败,token失效,派发清除token请求,重新登录
+                store.dispatch("user/getLoginOut")
+                next("/login")
+            })
+     
+        }
+    }else{
+        //没有token,放行
+        next()
+    }
+})
+export default router
 

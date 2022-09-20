@@ -6,13 +6,13 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p v-if="!userInfo.name">
+          <p v-if="!userName">
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
           </p>
-          <p v-if="userInfo.name">
-            <span>{{userInfo.name}}</span>
+          <p v-if="userName">
+            <span>{{ userName }}</span>
             <a class="register" @click="loginOut">退出登录</a>
           </p>
         </div>
@@ -63,18 +63,18 @@ export default {
     this.$bus.$on("delKeyword", () => {
       this.keyword = "";
     });
-    this.$store.dispatch("user/getUserLoginInfo")
+    
   },
   data() {
     return {
       keyword: "",
     };
   },
-  computed:{
+  computed: {
     //用户信息
-    userInfo(){
-      return this.$store.state.user.userInfo||{}
-    }
+    userName() {
+      return this.$store.state.user.userInfo.name;
+    },
   },
   methods: {
     //点击搜索按钮，跳转到搜素页面
@@ -92,9 +92,9 @@ export default {
       //   console.log(this.$route.params);
     },
     //退出登录操作
-    loginOut(){
-      this.$store.dispatch("user/getLoginOut")
-    }
+    loginOut() {
+      this.$store.dispatch("user/getLoginOut");
+    },
   },
 };
 </script>
@@ -113,7 +113,7 @@ export default {
 
       .loginList {
         float: left;
-        
+
         p {
           float: left;
           margin-right: 10px;
@@ -125,7 +125,7 @@ export default {
             margin-left: 5px;
           }
 
-          a:hover{
+          a:hover {
             color: #ea4a36;
           }
         }

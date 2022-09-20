@@ -28,9 +28,9 @@ const mutations = {
         state.userInfo = userInfo
     },
     //清除数据
-    CLEAR(state){
-        state.token=""
-        state.userInfo={}
+    CLEAR(state) {
+        state.token = ""
+        state.userInfo = {}
         //清除本地存储
         removeToken()
     }
@@ -70,7 +70,7 @@ const actions = {
             // console.log(result.data.token);
             //本地存储一份
             setToken(result.data.token)
-            
+
         } else {
             //失败
             return Promise.reject(new Error("faile"))
@@ -78,6 +78,7 @@ const actions = {
     },
     //获取用户登录信息
     async getUserLoginInfo({ commit }) {
+        // console.log("有派发");
         let result = await reqUserInfo()
         // console.log(result);
         if (result.code == 200) {

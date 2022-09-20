@@ -33,6 +33,8 @@ export default {
   mounted() {
     //通知Vuex从mock接口获取floor的模拟数据
     this.$store.dispatch("home/getFloorList", "getFloorList");
+
+
   },
   computed: {
     //向仓库获取floor数据
