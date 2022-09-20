@@ -60,3 +60,16 @@ export const reqUpdateChecked = (skuId,isChecked) => requests({
     url: `/cart/checkCart/${skuId}/${isChecked}`,
     method: 'get'
 })
+
+//设置获取验证码的接口
+export const reqCode = (phone) => requests({
+    url: `/user/passport/sendCode/${phone}`,
+    method: 'get'
+})
+
+//设置注册用户的接口
+export const reqRegister = (data) => requests({
+    url: '/user/passport/register',
+    data,
+    method: 'post'
+})
