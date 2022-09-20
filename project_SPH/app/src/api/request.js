@@ -22,6 +22,10 @@ requests.interceptors.request.use((config) => {
         config.headers.userTempId = store.state.detail.uuid_token
         //    console.log(config.headers.userTempId)
     }
+    //判断是否有token
+    if(store.state.user.token){
+        config.headers.token = store.state.user.token
+    }
     //进度条开始
     nprogress.start()
     //配置对象:里面的header属性很重要

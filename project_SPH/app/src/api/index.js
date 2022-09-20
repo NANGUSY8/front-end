@@ -80,3 +80,15 @@ export const reqLogin = (data) => requests({
     data,
     method: 'post'
 })
+
+//设置获取用户登录信息的接口
+export const reqUserInfo = () => requests({
+    url: '/user/passport/auth/getUserInfo',
+    method: 'get'
+})
+
+//设置退出登录的接口:让服务器清除token
+export const reqLoginOut = () => requests({
+    url: '/user/passport/logout',
+    method: 'get'
+})
