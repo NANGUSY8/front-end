@@ -92,3 +92,15 @@ export const reqLoginOut = () => requests({
     url: '/user/passport/logout',
     method: 'get'
 })
+
+//设置获取用户地址信息的接口
+export const reqAddressInfo = () => requests({
+    url: '/user/userAddress/auth/findUserAddressList',
+    method: 'get'
+})
+
+//设置获取订单交易页的接口
+export const reqTradeInfo = () => requests({
+    url: '/order/auth/trade',
+    method: 'get'
+})
