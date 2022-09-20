@@ -8,6 +8,7 @@ import MyHome from '@/pages/MyHome'
 import MyDetail from '@/pages/MyDetail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from "@/pages/ShopCart"
+import MyTrade from "@/pages/MyTrade"
 
 export default [
     {
@@ -61,6 +62,15 @@ export default [
         path: '/shopcart',
         name: "shopcart",
         component: ShopCart,
+        meta: {
+            //控制MyFooter组件是否显示
+            show: true
+        }
+    },
+    {
+        path: '/trade',
+        name: "trade",
+        component: MyTrade,
         meta: {
             //控制MyFooter组件是否显示
             show: true
