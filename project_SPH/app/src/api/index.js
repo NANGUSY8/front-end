@@ -104,3 +104,10 @@ export const reqTradeInfo = () => requests({
     url: '/order/auth/trade',
     method: 'get'
 })
+
+//设置获取提交订单的接口
+export const reqSubmitOrder = (tradeNo,data) => requests({
+    url: `/order/auth/submitOrder?tradeNo=${tradeNo}`,
+    data,
+    method: 'post'
+})

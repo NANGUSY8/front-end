@@ -15,6 +15,8 @@ Vue.component(Pagination.name, Pagination)
 //引入路由
 import router from '@/router'
 
+//引入API
+import * as API from '@/api'
 
 //引入轮播图样式
 import 'swiper/css/swiper.min.css'
@@ -35,5 +37,7 @@ new Vue({
   beforeCreate() {
     //注册全局事件总线
     Vue.prototype.$bus = this
+    //注册API
+    Vue.prototype.$API = API
   }
 }).$mount('#app')

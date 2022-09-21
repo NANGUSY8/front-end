@@ -2,7 +2,7 @@
   <div class="pagination">
     <button
       @click="$emit('getPageNo', pageNo - 1)"
-      :disabled="paginationParams.start == 1"
+      :disabled="pageNo == 1"
     >
       上一页
     </button>
@@ -22,7 +22,7 @@
       </button>
     </template>
 
-    <button v-if="paginationParams.end < totalPages - 1">···</button>
+    <button v-if="paginationParams.end < totalPages -1 ">···</button>
     <button
       v-if="paginationParams.end < totalPages"
       @click="$emit('getPageNo', totalPages)"
@@ -31,7 +31,7 @@
     </button>
     <button
       @click="$emit('getPageNo', pageNo + 1)"
-      :disabled="paginationParams.end == totalPages"
+      :disabled="pageNo == totalPages"
     >
       下一页
     </button>
@@ -54,11 +54,16 @@ export default {
       let { pageNo, continues, totalPages } = this;
 
       //非正常情况:如果当前页大于总页数
-      if (pageNo > totalPages) {
-        pageNo = totalPages;
-        end = totalPages;
-        start = totalPages - continues + 1;
-      } else {
+      if(continues>totalPages){
+        start=1
+        end=totalPages
+      }
+      // else if (pageNo > totalPages) {
+      //   pageNo = totalPages;
+      //   end = totalPages;
+      //   start = totalPages - continues + 1;
+      // } 
+      else {
         start = pageNo - parseInt(continues / 2);
         end = pageNo + parseInt(continues / 2);
         if (start < 1) {
@@ -76,7 +81,7 @@ export default {
     pageFor() {
       let forArr = [];
       let { start, end } = this.paginationParams;
-      for (let i = start; i < end; i++) {
+      for (let i = start; i <= end; i++) {
         forArr.push(i);
       }
       return forArr;

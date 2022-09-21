@@ -62,6 +62,7 @@
         <textarea
           placeholder="建议留言前先与商家沟通确认"
           class="remarks-cont"
+          v-model="msg"
         ></textarea>
       </div>
       <div class="line"></div>
@@ -102,7 +103,7 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <a class="subBtn" @click="submitOrder">提交订单</a>
     </div>
   </div>
 </template>
@@ -111,6 +112,12 @@
 import { mapState } from "vuex";
 export default {
   name: "Trade",
+  data() {
+    return {
+      msg: "",
+      orderId: 0,
+    };
+  },
   mounted() {
     //获取用户地址
     this.$store.dispatch("trade/getAddressInfo");
@@ -134,6 +141,30 @@ export default {
         item.isDefault = "0";
       });
       addressInfo.isDefault = "1";
+    },
+
+    //提交订单
+    async submitOrder() {
+      //整理发给服务器的参数
+      let tradeNo = this.tradeInfo.tradeNo;
+      let data = {
+        consignee: this.UserDefaultAddress.consignee,
+        consigneeTel: this.UserDefaultAddress.consigneeTel,
+        deliveryAddress: this.UserDefaultAddress.fullAddress,
+        paymentWay: "ONLINE",
+        orderComment: this.msg,
+        orderDetailList: this.tradeInfo.detailArrayList,
+      };
+      //不通过Vuex发送请求
+      let result = await this.$API.reqSubmitOrder(tradeNo, data)
+          if (result.code == 200) {
+            this.orderId = result.data;
+            //跳转路由
+            this.$router.push(`/pay?orderId=${this.orderId}`);
+          }else{
+            alert(result.message)
+          }
+        
     },
   },
 };

@@ -9,6 +9,7 @@ import MyDetail from '@/pages/MyDetail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from "@/pages/ShopCart"
 import MyTrade from "@/pages/MyTrade"
+import MyPay from "@/pages/MyPay"
 
 export default [
     {
@@ -71,6 +72,14 @@ export default [
         path: '/trade',
         name: "trade",
         component: MyTrade,
+        meta: {
+            //控制MyFooter组件是否显示
+            show: true
+        }
+    },
+    {
+        path: '/pay',
+        component: MyPay,
         meta: {
             //控制MyFooter组件是否显示
             show: true
