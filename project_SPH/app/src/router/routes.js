@@ -1,6 +1,6 @@
 //配置路由信息
 
-//引入路由组件
+//引入一级路由组件
 import MySearch from '@/pages/MySearch'
 import MyLogin from '@/pages/MyLogin'
 import MyRegister from '@/pages/MyRegister'
@@ -11,6 +11,11 @@ import ShopCart from "@/pages/ShopCart"
 import MyTrade from "@/pages/MyTrade"
 import MyPay from "@/pages/MyPay"
 import PaySuccess from "@/pages/PaySuccess"
+import MyCenter from "@/pages/MyCenter"
+
+//引入二级路由
+import myOrder from "@/pages/MyCenter/myOrder"
+import groupOrder from "@/pages/MyCenter/groupOrder"
 
 export default [
     {
@@ -20,6 +25,29 @@ export default [
             //控制MyFooter组件是否显示
             show: true
         }
+    },
+    {
+        path: '/center',
+        component: MyCenter,
+        meta: {
+            //控制MyFooter组件是否显示
+            show: true
+        },
+        children:[
+            {
+                path:'myorder',
+                component:myOrder
+            },
+            {
+                path:'grouporder',
+                component:groupOrder
+            },
+            //重定向
+            {
+                path:'/center',
+                redirect:'/center/myorder'
+            },
+        ]
     },
     {
         path: '/login',

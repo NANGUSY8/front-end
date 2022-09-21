@@ -21,7 +21,7 @@
               type="checkbox"
               name="chk_list"
               :checked="cartInfo.isChecked === 1"
-              @click="updateChecked(cartInfo,$event)"
+              @click="updateChecked(cartInfo, $event)"
             />
           </li>
           <li class="cart-list-con2">
@@ -60,7 +60,12 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isCheckedAll&&cartInfoList.length>0" @click="updateCheckedAll($event)"/>
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isCheckedAll && cartInfoList.length > 0"
+          @click="updateCheckedAll($event)"
+        />
         <span>全选</span>
       </div>
       <div class="option">
@@ -107,7 +112,9 @@ export default {
     sumPrice() {
       let sum = 0;
       this.cartInfoList.forEach((item) => {
-        sum += item.skuPrice * item.skuNum;
+        if (item.isChecked == 1) {
+          sum += item.skuPrice * item.skuNum;
+        }
       });
       return sum.toFixed(2);
     },
@@ -117,7 +124,7 @@ export default {
     getData() {
       this.$store.dispatch("shopcart/getCartList");
     },
-    
+
     //产品数量操作+节流,type:区分谁点 disNum:差值(1,-1,输入值),cartInfo:区分谁
     handler: throttle(async function (type, disNum, cartInfo) {
       switch (type) {
@@ -146,7 +153,7 @@ export default {
           alert(err.message);
         });
     }, 500),
-    
+
     //产品删除操作
     async deleteCart(skuId) {
       //发送异步请求
@@ -163,12 +170,15 @@ export default {
     },
 
     //产品状态勾选操作
-    async updateChecked(cartInfo,event){
+    async updateChecked(cartInfo, event) {
       //判断isChecked
-      let isChecked = event.target.checked? "1":"0"
+      let isChecked = event.target.checked ? "1" : "0";
       //发送异步请求
       await this.$store
-        .dispatch("shopcart/updateCheckedById", {skuId:cartInfo.skuId,isChecked:isChecked})
+        .dispatch("shopcart/updateCheckedById", {
+          skuId: cartInfo.skuId,
+          isChecked: isChecked,
+        })
         .then(() => {
           //删除成功,获取购物车最新数据展示
           this.getData();
@@ -180,9 +190,10 @@ export default {
     },
 
     //删除选中的产品
-    async deleteCheckedCart(){
-      await this.$store.dispatch("shopcart/deleteCheckedCart")
-      .then(() => {
+    async deleteCheckedCart() {
+      await this.$store
+        .dispatch("shopcart/deleteCheckedCart")
+        .then(() => {
           //删除成功,获取购物车最新数据展示
           this.getData();
         })
@@ -193,10 +204,11 @@ export default {
     },
 
     //更新全选的状态
-    async updateCheckedAll(event){
-      let isChecked = event.target.checked? "1":"0"
-      await this.$store.dispatch("shopcart/updateCheckedAll",isChecked)
-      .then(() => {
+    async updateCheckedAll(event) {
+      let isChecked = event.target.checked ? "1" : "0";
+      await this.$store
+        .dispatch("shopcart/updateCheckedAll", isChecked)
+        .then(() => {
           //更新成功,获取购物车最新数据展示
           this.getData();
         })
@@ -204,8 +216,7 @@ export default {
           //失败
           alert(err.message);
         });
-
-    }
+    },
   },
 };
 </script>
