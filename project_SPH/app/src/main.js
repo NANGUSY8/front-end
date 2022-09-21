@@ -4,6 +4,9 @@ import App from '@/App.vue'
 //引入仓库
 import store from '@/store'
 
+//引入element-ui
+import { MessageBox } from 'element-ui';
+
 import TypeNav from '@/components/TypeNav'
 import Carousel from '@/components/Carousel'
 import Pagination from '@/components/Pagination'
@@ -27,6 +30,7 @@ import '@/mock/mockServer'
 //关闭生产提示
 Vue.config.productionTip = false
 
+
 new Vue({
   render: h => h(App),
   //注册路由信息,注册完后,不管是路由组件还是非路由组件,身上都有$route/$router属性
@@ -39,5 +43,8 @@ new Vue({
     Vue.prototype.$bus = this
     //注册API
     Vue.prototype.$API = API
+    //将弹框挂载到组件上
+    Vue.prototype.$msgbox = MessageBox
+    Vue.prototype.$alert = MessageBox.alert
   }
 }).$mount('#app')
