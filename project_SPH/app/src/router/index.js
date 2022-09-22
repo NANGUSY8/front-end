@@ -58,8 +58,14 @@ router.beforeEach(async(to,from,next)=>{
      
         }
     }else{
-        //没有token,放行
-        next()
+        //没有登录,不能去交易/支付/订单页
+        if(to.path.indexOf("trade")!=-1||to.path.indexOf("pay")!="-1"||to.path.indexOf("center")!="-1"){
+            //携带有想去的路径的query参数去login
+            next(`/login?redirect=${to.path}`)
+        }else{
+            next()
+        }
+        
     }
 })
 export default router

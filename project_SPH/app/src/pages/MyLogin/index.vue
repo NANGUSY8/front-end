@@ -95,8 +95,9 @@ export default {
         (await this.$store
           .dispatch("user/getLogin", { phone, password })
           .then(() => {
-            //成功,跳转到首页
-            this.$router.push("/home");
+            //成功,如果路径有query参数,跳转到query参数所在的路径,否则跳转到首页
+            let toPath = this.$route.query.redirect || "/home";
+            this.$router.push(toPath);
           })
           .catch((err) => {
             alert(err.message);

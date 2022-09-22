@@ -48,6 +48,7 @@ export default [
                 redirect:'/center/myorder'
             },
         ]
+        
     },
     {
         path: '/login',
@@ -104,6 +105,15 @@ export default [
         meta: {
             //控制MyFooter组件是否显示
             show: true
+        },
+        //路由守卫:只能由购物车页而来
+        beforeEnter:(to,from,next)=>{
+            if(from.path=="/shopcart"){
+                next()
+            }else{
+                //待着原地址
+                next(false)
+            }
         }
     },
     {
@@ -113,6 +123,15 @@ export default [
         meta: {
             //控制MyFooter组件是否显示
             show: true
+        },
+        //路由守卫:只能由交易页而来
+        beforeEnter:(to,from,next)=>{
+            if(from.path=="/trade"){
+                next()
+            }else{
+                //待着原地址
+                next(false)
+            }
         }
     },
     {
@@ -122,6 +141,15 @@ export default [
         meta: {
             //控制MyFooter组件是否显示
             show: true
+        },
+        //路由守卫:只能由支付页而来
+        beforeEnter:(to,from,next)=>{
+            if(from.path=="/pay"){
+                next()
+            }else{
+                //待着原地址
+                next(false)
+            }
         }
     },
     //重定向,在项目运行起来时,访问/,定向到首页
