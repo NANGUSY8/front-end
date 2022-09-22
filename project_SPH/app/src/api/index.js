@@ -112,7 +112,7 @@ export const reqSubmitOrder = (tradeNo,data) => requests({
     method: 'post'
 })
 
-//设置获取订单的接口
+//设置获取交易订单的接口
 export const reqOrderInfo = (orderId) => requests({
     url: `/payment/weixin/createNative/${orderId}`,
     method: 'get'
@@ -121,5 +121,11 @@ export const reqOrderInfo = (orderId) => requests({
 //设置获取订单状态的接口
 export const reqOrderStatus = (orderId) => requests({
     url: `/payment/weixin/queryPayStatus/${orderId}`,
+    method: 'get'
+})
+
+//设置获取我的订单的接口
+export const reqMyOrder = (page,limit) => requests({
+    url: `/order/auth/${page}/${limit}`,
     method: 'get'
 })
