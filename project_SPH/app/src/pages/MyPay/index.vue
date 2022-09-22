@@ -165,7 +165,7 @@ export default {
         this.timer = setInterval(async () => {
           let result = await this.$API.reqOrderStatus(this.orderId);
           // console.log(result);
-          if(result.code==205){
+          if(result.code==200){
             //清空计时器
             clearInterval(this.timer)
             this.timer=null

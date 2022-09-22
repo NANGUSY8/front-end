@@ -1,26 +1,9 @@
 //配置路由信息
 
-//引入一级路由组件
-import MySearch from '@/pages/MySearch'
-import MyLogin from '@/pages/MyLogin'
-import MyRegister from '@/pages/MyRegister'
-import MyHome from '@/pages/MyHome'
-import MyDetail from '@/pages/MyDetail'
-import AddCartSuccess from '@/pages/AddCartSuccess'
-import ShopCart from "@/pages/ShopCart"
-import MyTrade from "@/pages/MyTrade"
-import MyPay from "@/pages/MyPay"
-import PaySuccess from "@/pages/PaySuccess"
-import MyCenter from "@/pages/MyCenter"
-
-//引入二级路由
-import myOrder from "@/pages/MyCenter/myOrder"
-import groupOrder from "@/pages/MyCenter/groupOrder"
-
 export default [
     {
         path: '/home',
-        component: MyHome,
+        component: ()=>import("@/pages/MyHome"),
         meta: {
             //控制MyFooter组件是否显示
             show: true
@@ -28,7 +11,7 @@ export default [
     },
     {
         path: '/center',
-        component: MyCenter,
+        component: ()=>import("@/pages/MyCenter"),
         meta: {
             //控制MyFooter组件是否显示
             show: true
@@ -36,11 +19,11 @@ export default [
         children:[
             {
                 path:'myorder',
-                component:myOrder
+                component:()=>import("@/pages/MyCenter/myOrder")
             },
             {
                 path:'grouporder',
-                component:groupOrder
+                component:()=>import("@/pages/MyCenter/groupOrder")
             },
             //重定向
             {
@@ -52,7 +35,7 @@ export default [
     },
     {
         path: '/login',
-        component: MyLogin,
+        component: ()=>import("@/pages/MyLogin"),
         meta: {
             show: false
         }
@@ -60,14 +43,14 @@ export default [
     {
         name: 'search',
         path: '/search/:keyword?',
-        component: MySearch,
+        component: ()=>import("@/pages/MySearch"),
         meta: {
             show: true
         }
     },
     {
         path: '/register',
-        component: MyRegister,
+        component: ()=>import("@/pages/MyRegister"),
         meta: {
             show: false
         }
@@ -75,7 +58,7 @@ export default [
     {
         name: 'detail',
         path: '/detail/:skuid?',
-        component: MyDetail,
+        component: ()=>import("@/pages/MyDetail"),
         meta: {
             show: true
         }
@@ -83,7 +66,7 @@ export default [
     {
         path: '/addcartsuccess',
         name: "addcartsuccess",
-        component: AddCartSuccess,
+        component: ()=>import("@/pages/AddCartSuccess"),
         meta: {
             //控制MyFooter组件是否显示
             show: true
@@ -92,7 +75,7 @@ export default [
     {
         path: '/shopcart',
         name: "shopcart",
-        component: ShopCart,
+        component: ()=>import("@/pages/ShopCart"),
         meta: {
             //控制MyFooter组件是否显示
             show: true
@@ -101,7 +84,7 @@ export default [
     {
         path: '/trade',
         name: "trade",
-        component: MyTrade,
+        component: ()=>import("@/pages/MyTrade"),
         meta: {
             //控制MyFooter组件是否显示
             show: true
@@ -119,7 +102,7 @@ export default [
     {
         path: '/pay',
         name: "pay",
-        component: MyPay,
+        component: ()=>import("@/pages/MyPay"),
         meta: {
             //控制MyFooter组件是否显示
             show: true
@@ -137,7 +120,7 @@ export default [
     {
         path: '/paysuccess',
         name: "paysuccess",
-        component: PaySuccess,
+        component: ()=>import("@/pages/PaySuccess"),
         meta: {
             //控制MyFooter组件是否显示
             show: true
