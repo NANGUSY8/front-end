@@ -26,7 +26,8 @@ import 'swiper/css/swiper.min.css'
 
 //引入mockServer,模拟数据
 import '@/mock/mockServer'
-
+//引入vee-validate验证表单
+import "@/plugins/validate.js"
 //关闭生产提示
 Vue.config.productionTip = false
 
