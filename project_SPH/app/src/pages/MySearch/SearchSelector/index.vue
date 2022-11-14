@@ -121,7 +121,7 @@ export default {
           text-overflow: ellipsis;
           white-space: nowrap;
           font-weight: 700;
-          color: #e1251b;
+          color: #ba3d54;
           font-style: italic;
           font-size: 14px;
           cursor: pointer;

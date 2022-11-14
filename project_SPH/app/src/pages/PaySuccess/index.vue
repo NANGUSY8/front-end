@@ -73,8 +73,8 @@
             &.btn-look {
               margin-right: 13px;
               color: #fff;
-              background-color: #e1251b;
-              border: 1px solid #e1251b;
+              background-color: #ba3d54;
+              border: 1px solid #ba3d54;
             }
 
             &.btn-goshop {

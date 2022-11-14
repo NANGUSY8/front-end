@@ -7,7 +7,7 @@
       <nav class="nav">
         <a href="###">服装城</a>
         <a href="###">美妆馆</a>
-        <a href="###">尚品汇超市</a>
+        <a href="###">购物超市</a>
         <a href="###">全球购</a>
         <a href="###">闪购</a>
         <a href="###">团购</a>
@@ -154,7 +154,7 @@ export default {
 
 <style lang="less" scoped>
 .type-nav {
-  border-bottom: 2px solid #e1251b;
+  border-bottom: 2px solid #ba3d54;
 
   a{
     cursor: pointer;
@@ -169,7 +169,7 @@ export default {
     .all {
       width: 210px;
       height: 45px;
-      background-color: #e1251b;
+      background-color: #ba3d54;
       line-height: 45px;
       text-align: center;
       color: #fff;

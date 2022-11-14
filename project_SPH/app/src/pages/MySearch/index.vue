@@ -113,7 +113,7 @@
             :pageSize="pageSize"
             :total="total"
             :totalPages="totalPages"
-            :continues="5"
+            :continues="3"
             @getPageNo="getPageNo"
           />
         </div>
@@ -141,7 +141,7 @@ export default {
         keyword: "", //关键字
         order: "1:desc", //排序
         pageNo: 1, //当前第几页
-        pageSize: 10, //每一页需要展示多少条数据
+        pageSize: 8, //每一页需要展示多少条数据
         props: [], //平台属性的选择参数
         trademark: "", //品牌参数
       },
@@ -178,6 +178,7 @@ export default {
     //因为用多次发送请求给服务器,所以将其封装成一个函数
     getData() {
       //通知Vuex从接口获取搜索商品的模拟数据
+      // console.log(this.searchParams);
       this.$store.dispatch("search/getSearchInfo", this.searchParams);
     },
     //删除面包屑中的分类名
@@ -388,7 +389,7 @@ export default {
 
               &.active {
                 a {
-                  background: #e1251b;
+                  background: #ba3d54;
                   color: #fff;
                 }
               }
@@ -406,7 +407,7 @@ export default {
 
           li {
             height: 100%;
-            width: 20%;
+            width: 25%;
             margin-top: 10px;
             line-height: 28px;
 
@@ -430,7 +431,7 @@ export default {
               .price {
                 padding-left: 15px;
                 font-size: 18px;
-                color: #c81623;
+                color: #ba3d54;
 
                 strong {
                   font-weight: 700;
@@ -504,12 +505,12 @@ export default {
                 }
 
                 .btn-danger {
-                  border: 1px solid #e1251b;
-                  color: #e1251b;
+                  border: 1px solid #ba3d54;
+                  color: #ba3d54;
 
                   &:hover {
-                    border: 1px solid #e1251b;
-                    background-color: #e1251b;
+                    border: 1px solid #ba3d54;
+                    background-color: #ba3d54;
                     color: white !important;
                     text-decoration: none;
                   }
@@ -556,7 +557,7 @@ export default {
               &.active {
                 a {
                   background-color: #fff;
-                  color: #e1251b;
+                  color: #ba3d54;
                   border-color: #fff;
                   cursor: default;
                 }

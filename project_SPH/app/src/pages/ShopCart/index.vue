@@ -13,14 +13,14 @@
       <div class="cart-body">
         <ul
           class="cart-list"
-          v-for="(cartInfo, index) in cartInfoList"
+          v-for="(cartInfo, index) in cartList"
           :key="cartInfo.id"
         >
           <li class="cart-list-con1">
             <input
               type="checkbox"
               name="chk_list"
-              :checked="cartInfo.isChecked === 1"
+              :checked="cartInfo.isChecked == 1"
               @click="updateChecked(cartInfo, $event)"
             />
           </li>
@@ -63,7 +63,7 @@
         <input
           class="chooseAll"
           type="checkbox"
-          :checked="isCheckedAll && cartInfoList.length > 0"
+          :checked="isCheckedAll && cartList.length > 0"
           @click="updateCheckedAll($event)"
         />
         <span>全选</span>
@@ -74,7 +74,7 @@
         <a href="#none">清除下柜商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择 <span>0</span>件商品</div>
+        <div class="chosed">已选择 <span>{{checkedNum}}</span>件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） :</em>
           <i class="summoney">{{ sumPrice }}</i>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 //引入节流
 import throttle from "lodash/throttle";
 
@@ -99,19 +99,21 @@ export default {
   },
 
   computed: {
-    ...mapGetters("shopcart", ["cartList"]),
-    //简化购物车信息列表
-    cartInfoList() {
-      return this.cartList.cartInfoList || [];
+    ...mapState({
+      cartList:(state)=>state.shopcart.cartList||[]
+    }),
+    //选中商品的个数
+    checkedNum(){
+      return this.cartList.filter((item) => item.isChecked == 1).length
     },
     //判断是否全选
     isCheckedAll() {
-      return this.cartInfoList.every((item) => item.isChecked == 1);
+      return this.cartList.every((item) => item.isChecked == 1);
     },
     //计算全部商品的总价
     sumPrice() {
       let sum = 0;
-      this.cartInfoList.forEach((item) => {
+      this.cartList.forEach((item) => {
         if (item.isChecked == 1) {
           sum += item.skuPrice * item.skuNum;
         }
@@ -403,7 +405,7 @@ export default {
         padding: 0 10px;
 
         .summoney {
-          color: #c81623;
+          color: #ba3d54;
           font-size: 16px;
         }
       }
@@ -421,7 +423,7 @@ export default {
           text-align: center;
           font-size: 18px;
           font-family: "Microsoft YaHei";
-          background: #e1251b;
+          background: #ba3d54;
           overflow: hidden;
         }
       }

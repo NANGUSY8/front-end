@@ -25,7 +25,7 @@
           placeholder="请输入验证码"
           v-model="code"
           name="code"
-          v-validate="{ required: true, regex: /^\d{6}$/ }"
+          v-validate="{ required: true, regex: /^[0-9A-z]{6}$/ }"
           :class="{ invalid: errors.has('code') }"
         />
         <button class="btn-code" @click="getCode(phone)">发送验证码</button>
@@ -63,7 +63,7 @@
           v-validate="{ required: true, 'agree': true }"
           :class="{ invalid: errors.has('agree') }"
         />
-        <span>同意协议并注册《尚品汇用户协议》</span>
+        <span>&nbsp;同意《用户协议》并注册</span>
         <span class="error-msg">{{ errors.first("agree") }}</span>
       </div>
       <div class="btn">
@@ -165,7 +165,7 @@ export default {
         float: right;
 
         a {
-          color: #e1251b;
+          color: #ba3d54;
         }
       }
     }
@@ -200,7 +200,7 @@ export default {
         width: 100px;
         height: 38px;
         margin-left: 10px;
-        background-color: #ea4a36;
+        background-color: #ba3d46;
         border-color: transparent;
         color: white;
         font-size: 13px;
@@ -239,7 +239,7 @@ export default {
         outline: none;
         width: 270px;
         height: 36px;
-        background: #e1251b;
+        background: #ba3d54;
         color: #fff !important;
         display: inline-block;
         border-color: transparent;

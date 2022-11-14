@@ -196,7 +196,7 @@ export default {
     }
 
     .orange {
-      color: #e1251b;
+      color: #ba3d54;
     }
 
     .money {
@@ -204,7 +204,7 @@ export default {
     }
 
     .zfb {
-      color: #e1251b;
+      color: #ba3d54;
       font-weight: 700;
     }
 
@@ -255,13 +255,13 @@ export default {
       padding-left: 25px;
       padding-bottom: 15px;
       margin-bottom: 10px;
-      border: 2px solid #e1251b;
+      border: 2px solid #ba3d54;
 
       h4 {
         margin: 9px 0;
         font-size: 14px;
         line-height: 21px;
-        color: #e1251b;
+        color: #ba3d54;
       }
 
       ol {
@@ -321,8 +321,8 @@ export default {
         font: 18px "微软雅黑";
         font-weight: 700;
         border-radius: 0;
-        background-color: #e1251b;
-        border: 1px solid #e1251b;
+        background-color: #ba3d54;
+        border: 1px solid #ba3d54;
         color: #fff;
         text-align: center;
         vertical-align: middle;

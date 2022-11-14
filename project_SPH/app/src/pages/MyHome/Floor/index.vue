@@ -74,7 +74,7 @@ export default {
     .title {
       .fl {
         float: left;
-        color: #c81623;
+        color: #ba3d54;
         font-size: 20px;
         line-height: 30px;
         margin: 9px 0;
@@ -122,7 +122,7 @@ export default {
     }
 
     .tab-content {
-      border-top: 2px solid #c81623;
+      border-top: 2px solid #ba3d54;
       border-bottom: 1px solid #e4e4e4;
 
       .tab-pane {

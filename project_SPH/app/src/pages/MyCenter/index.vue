@@ -213,7 +213,7 @@ export default {
                     float: left;
                     min-width: 80px;
                     max-width: 250px;
-                    color: #e1251b;
+                    color: #ba3d54;
 
                     &.service {
                       color: #666;

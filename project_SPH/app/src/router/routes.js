@@ -91,7 +91,7 @@ export default [
         },
         //路由守卫:只能由购物车页而来
         beforeEnter:(to,from,next)=>{
-            if(from.path=="/shopcart"){
+            if(from.path=="/shopcart"||from.path=="/login"){
                 next()
             }else{
                 //待着原地址

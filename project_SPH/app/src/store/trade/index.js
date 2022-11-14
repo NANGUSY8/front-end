@@ -16,6 +16,7 @@ const mutations = {
     //获取用户地址信息
     GETADDRESSINFO(state,addressInfoList){
         state.addressInfoList=addressInfoList
+        // console.log(addressInfoList);
     },
     //获取交易页订单
     GETTRADEINFO(state,tradeInfo){

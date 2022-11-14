@@ -62,6 +62,7 @@ router.beforeEach(async (to, from, next) => {
 
         }
     } else {
+        // console.log('没token');
         //没有登录,不能去交易/支付/订单页
         if (to.path.indexOf("trade") != -1 || to.path.indexOf("pay") != "-1" || to.path.indexOf("center") != "-1") {
             //携带有想去的路径的query参数去login

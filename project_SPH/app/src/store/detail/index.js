@@ -16,6 +16,7 @@ const state = {
 const mutations = {
     GETGOODSLIST(state, goodsList) {
         state.goodsList = goodsList
+        // console.log(goodsList);
     }
 }
 //用户的动作

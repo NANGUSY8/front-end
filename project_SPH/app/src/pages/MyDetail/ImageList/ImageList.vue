@@ -78,12 +78,12 @@ export default {
       display: block;
 
       &.active {
-        border: 2px solid #f60;
+        border: 2px solid #ba3d54;
         padding: 1px;
       }
 
       &:hover {
-        border: 2px solid #f60;
+        border: 2px solid #ba3d54;
         padding: 1px;
       }
     }

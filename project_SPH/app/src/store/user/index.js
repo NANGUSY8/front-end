@@ -67,13 +67,12 @@ const actions = {
         if (result.code == 200) {
             //成功,服务器返回token
             commit("GETLOGIN", result.data.token)
-            // console.log(result.data.token);
+            // console.log('denglu'+result.data);
             //本地存储一份
             setToken(result.data.token)
-
         } else {
             //失败
-            return Promise.reject(new Error("faile"))
+            return Promise.reject(new Error(result.message))
         }
     },
     //获取用户登录信息
@@ -84,7 +83,8 @@ const actions = {
         if (result.code == 200) {
             //成功,服务器返回用户数据
             commit("GETUSERLOGININFO", result.data)
-
+            // console.log("获取信息");
+            // console.log(result.data);
         } else {
             //失败
             return Promise.reject(new Error("faile"))

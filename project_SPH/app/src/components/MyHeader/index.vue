@@ -5,7 +5,7 @@
     <div class="top">
       <div class="container">
         <div class="loginList">
-          <p>尚品汇欢迎您！</p>
+          <p>购物商城欢迎您！</p>
           <p v-if="!userName">
             <span>请</span>
             <router-link to="/login">登录</router-link>
@@ -19,10 +19,10 @@
         <div class="typeList">
           <router-link to="/center/myorder">我的订单</router-link>
           <router-link to="/shopcart">我的购物车</router-link>
-          <a href="###">我的尚品汇</a>
-          <a href="###">尚品汇会员</a>
+          <a href="###">个人中心</a>
+          <a href="###">会员</a>
           <a href="###">企业采购</a>
-          <a href="###">关注尚品汇</a>
+          <a href="###">关注购物商城</a>
           <a href="###">合作招商</a>
           <a href="###">商家后台</a>
         </div>
@@ -63,7 +63,6 @@ export default {
     this.$bus.$on("delKeyword", () => {
       this.keyword = "";
     });
-    
   },
   data() {
     return {
@@ -92,8 +91,16 @@ export default {
       //   console.log(this.$route.params);
     },
     //退出登录操作
-    loginOut() {
-      this.$store.dispatch("user/getLoginOut");
+    async loginOut() {
+      await this.$store
+        .dispatch("user/getLoginOut")
+        .then(() => {
+          //成功跳转到首页
+          this.$router.push("/home");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     },
   },
 };
@@ -126,7 +133,7 @@ export default {
           }
 
           a:hover {
-            color: #ea4a36;
+            color: #ba3d54;
           }
         }
       }
@@ -173,7 +180,7 @@ export default {
           width: 490px;
           height: 32px;
           padding: 0px 4px;
-          border: 2px solid #ea4a36;
+          border: 2px solid #ba3d54;
           float: left;
 
           &:focus {
@@ -184,7 +191,7 @@ export default {
         button {
           height: 32px;
           width: 68px;
-          background-color: #ea4a36;
+          background-color: #ba3d54;
           border: none;
           color: #fff;
           float: left;

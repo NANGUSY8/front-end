@@ -4,6 +4,8 @@ import axios from 'axios'
 import nprogress from 'nprogress'
 //引入进度条样式
 import "nprogress/nprogress.css"
+//引入仓库
+import store from '@/store'
 
 //创建axios实例
 const mockRequests = axios.create({
@@ -15,6 +17,16 @@ const mockRequests = axios.create({
 
 //设置请求拦截器
 mockRequests.interceptors.request.use((config) => {
+    //判断是否有uuid
+    if (store.state.detail.uuid_token) {
+        //设置请求头
+        config.headers.userTempId = store.state.detail.uuid_token
+        //    console.log(config.headers.userTempId)
+    }
+    //判断是否有token
+    if(store.state.user.token){
+        config.headers.token = store.state.user.token
+    }
     //进度条开始
     nprogress.start()
     return config

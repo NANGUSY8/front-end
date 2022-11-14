@@ -1,0 +1,25 @@
+[
+    {
+        "userId": 1,
+        "addressInfoList": [
+            {
+                "isDefault": "1",
+                "fullAddress": "广东省广州市番禺区小谷围街道广州大学城广东工业大学西生活区",
+                "phoneNum": "19807543844",
+                "consignee": "连连看"
+            },
+            {
+                "isDefault": "0",
+                "fullAddress": "广东省广州市番禺区小谷围街道广州大学城广州大学生活区",
+                "phoneNum": "19120332272",
+                "consignee": "连先生"
+            },
+            {
+                "isDefault": "0",
+                "fullAddress": "广东省汕头市潮南区司马浦镇大布上乡阿猴车行附近",
+                "phoneNum": "15019719091",
+                "consignee": "廖小姐"
+            }
+        ]
+    }
+]

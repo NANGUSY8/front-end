@@ -165,7 +165,7 @@ export default {
       //当前页
       page: "1",
       //每页显示数量
-      limit: "3",
+      limit: "2",
       //我的订单列表
       myOrderInfo: {},
     };

@@ -599,7 +599,7 @@ export default {
               float: left;
 
               a {
-                background-color: #e1251b;
+                background-color: #ba3d54;
                 padding: 0 25px;
                 font-size: 16px;
                 color: #fff;
@@ -636,7 +636,7 @@ export default {
           border-bottom: 1px solid #ccc;
 
           &.active {
-            border-top: 3px solid #e1251b;
+            border-top: 3px solid #ba3d54;
             border-bottom: 0;
             font-weight: normal;
           }
@@ -810,8 +810,8 @@ export default {
             }
 
             .addshopcar {
-              background-color: #e1251b;
-              border: 1px solid #e1251b;
+              background-color: #ba3d54;
+              border: 1px solid #ba3d54;
               padding: 10px 25px;
               font-size: 16px;
               color: #fff;
@@ -838,7 +838,7 @@ export default {
             &.active {
               a {
                 // border: 0;
-                background: #e1251b;
+                background: #ba3d54;
                 color: #fff;
               }
             }

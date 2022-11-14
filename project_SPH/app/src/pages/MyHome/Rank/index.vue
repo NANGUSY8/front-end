@@ -132,7 +132,7 @@ export default {
             }
 
             .on {
-                color: #e60012;
+                color: #ba3d54;
 
                 .img {
                     i {
@@ -154,7 +154,7 @@ export default {
                 line-height: 18px;
 
                 .img-item {
-                    border: 1px solid #e1251b;
+                    border: 1px solid #ba3d54;
                     width: 269px;
                     float: left;
                     overflow: hidden;
@@ -194,7 +194,7 @@ export default {
 
                         .info-price {
                             font-size: 20px;
-                            color: #e1251b;
+                            color: #ba3d54;
                             height: 35px;
                             padding-left: 10px;
                             display: block;

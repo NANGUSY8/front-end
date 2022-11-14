@@ -95,8 +95,11 @@ export default {
         (await this.$store
           .dispatch("user/getLogin", { phone, password })
           .then(() => {
-            //成功,如果路径有query参数,跳转到query参数所在的路径,否则跳转到首页
+            //成功,获取用户信息
+            this.$store.dispatch('user/getUserLoginInfo')
+            //如果路径有query参数,跳转到query参数所在的路径,否则跳转到首页
             let toPath = this.$route.query.redirect || "/home";
+            // console.log("lujing"+toPath);
             this.$router.push(toPath);
           })
           .catch((err) => {
@@ -111,7 +114,7 @@ export default {
 .login-container {
   .login-wrap {
     height: 487px;
-    background-color: #e93854;
+    background-color: #ba3d54;
 
     .login {
       width: 1200px;
@@ -152,7 +155,7 @@ export default {
           .current {
             border-bottom: none;
             border-top-color: #28a3ef;
-            color: #e1251b;
+            color: #ba3d54;
           }
         }
       }
@@ -217,13 +220,13 @@ export default {
           }
 
           .btn {
-            background-color: #e1251b;
+            background-color: #ba3d54;
             padding: 6px;
             border-radius: 0;
             font-size: 16px;
             font-family: 微软雅黑;
             word-spacing: 4px;
-            border: 1px solid #e1251b;
+            border: 1px solid #ba3d54;
             color: #fff;
             width: 100%;
             height: 36px;

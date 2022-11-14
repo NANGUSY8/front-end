@@ -51,7 +51,7 @@
             <h4>7天无理由退货</h4>
           </li>
           <li>
-            <h3>￥{{ detailInfo.orderPrice }}.00</h3>
+            <h3>￥{{ detailInfo.cartPrice }}.00</h3>
           </li>
           <li>x{{ detailInfo.skuNum }}</li>
           <li>有货</li>
@@ -76,10 +76,9 @@
       <ul>
         <li>
           <b
-            ><i>{{ tradeInfo.totalNum }}</i
-            >件商品，总商品金额</b
-          >
-          <span>¥{{ tradeInfo.totalAmount }}.00</span>
+            >共<i>&nbsp;{{ tradeInfo.totalNum }}&nbsp;</i>件商品，总商品金额：
+            <i>¥{{ tradeInfo.totalAmount }}.00</i>
+          </b>
         </li>
         <li>
           <b>返现：</b>
@@ -156,15 +155,14 @@ export default {
         orderDetailList: this.tradeInfo.detailArrayList,
       };
       //不通过Vuex发送请求
-      let result = await this.$API.reqSubmitOrder(tradeNo, data)
-          if (result.code == 200) {
-            this.orderId = result.data;
-            //跳转路由
-            this.$router.push(`/pay?orderId=${this.orderId}`);
-          }else{
-            alert(result.message)
-          }
-        
+      let result = await this.$API.reqSubmitOrder(tradeNo, data);
+      if (result.code == 200) {
+        this.orderId = result.data;
+        //跳转路由
+        this.$router.push(`/pay?orderId=${this.orderId}`);
+      } else {
+        alert(result.message);
+      }
     },
   },
 };
@@ -218,7 +216,7 @@ export default {
       }
 
       .username.selected {
-        border-color: #e1251b;
+        border-color: #ba3d54;
       }
 
       .username.selected::after {
@@ -323,12 +321,12 @@ export default {
           }
 
           h4 {
-            color: #c81623;
+            color: #ba3d54;
             font-weight: 400;
           }
 
           h3 {
-            color: #e12228;
+            color: #ba3d46;
           }
         }
       }
@@ -395,7 +393,7 @@ export default {
     }
 
     .price span {
-      color: #e12228;
+      color: #ba3d46;
       font-weight: 700;
       font-size: 14px;
     }
@@ -417,7 +415,7 @@ export default {
       line-height: 56px;
       text-align: center;
       color: #fff;
-      background-color: #e1251b;
+      background-color: #ba3d54;
     }
   }
 }
